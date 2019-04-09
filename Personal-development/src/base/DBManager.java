@@ -15,7 +15,7 @@ public class DBManager {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/ec_db?useUnicode=true&characterEncoding=utf8&useSSL=false", "root", "password");/* 各環境に合わせて変更してください*/
+					"jdbc:mysql://localhost:3306/personal_db?useUnicode=true&characterEncoding=utf8&useSSL=false", "root", "password");/* 各環境に合わせて変更してください*/
 			System.out.println("DBConnected!!");
 			return con;
 		} catch (ClassNotFoundException e) {

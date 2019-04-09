@@ -30,8 +30,8 @@
 	</div>
 </header>
 
-<c:if test="${errMsg != null}">
-	<div class="alert alert-danger" role="alert">${errMsg}</div>
+<c:if test="${loginErrorMessage != null}">
+	<div class="alert alert-danger" role="alert">${loginErrorMessage}</div>
 </c:if>
 <body style="background-color: #e9ecef75;">
 	<div class="top-wrapper">
@@ -41,7 +41,7 @@
 				<h1></h1>
 				<form class="form-signin" action="LoginServlet" method="post">
 					<h3>
-						<input type="text" name="loginId" placeholder="ログインID">
+						<input type="text" name="login_id" placeholder="ログインID">
 					</h3>
 					<h3>
 						<input type="password" name="password" placeholder="パスワード">
