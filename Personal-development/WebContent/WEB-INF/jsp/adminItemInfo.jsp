@@ -1,0 +1,80 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>商品詳細</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="common.css">
+<link rel="stylesheet" href="header.css">
+</head>
+<header>
+	<div class="container">
+		<div class="homeHeader">
+			<a href="adminInfo.html" style="color: white !important;">HOME</a>
+		</div>
+		<div class="header-right">
+			<a href="Login.html" class="logout">ログアウト</a>
+		</div>
+		<div class="header-right">
+			<a href="itemSignup.html" class="signup">商品登録</a>
+		</div>
+	</div>
+</header>
+
+<body style="background-color: #e9ecef75;">
+	<div class="top-wrapper">
+		<div class="container">
+			<h3>商品詳細</h3>
+			<div class="row">
+				<div class="col s6">
+					<div class="card">
+						<div class="card-image">
+							<img src="http://placehold.jp/500x500.png">
+						</div>
+					</div>
+				</div>
+				<div class="col s6">
+					<h4>ビニールレザー（合皮）椅子生地 アンティーク シンコール レザー ニフティ L-1158〜L-1170</h4>
+					<h5>274円</h5>
+					<p>クラシックレザーのキング。椅子の張り替えに最適なアンティーク風ビニールレザー。ソファやクッションカバー、ダイニングチェア、オフィスチェア（事務椅子）などいろいろお使いいただけます。
+						シンコール,椅子張替え,椅子カバー,椅子張り生地,ビニールレザー,合成皮革,フェイクレザー,ファブリック,布生地
+						●メーカー：シンコール
+						●品番：L-1158(6771),L-1159(6772),L-1158(6771),L-1160(6773),L-1161(6774),L-1162(6775),L-1163(6776),L-1164(6777),L-1165(6778),L-1166(6779),L-1167(6780),L-1168(6781),L-1169(6782),L-1170(6783)
+						●有効巾：135cm 厚み：約1mm ●裏地：非塩ビ（PU) ■送料■ 全国一律735円(北海道・沖縄・離島以外)
+						※北海道・沖縄、離島は別途追加送料が必要です。ご注文確認後メールにて送料をご連絡いたします。 ■発送■
+						ご注文確定後、２〜３営業日以内に発送します。（土日祝を除く） ■返品・交換について■
+						オーダー商品のため、お客様のご都合による返品、交換、変更は承ることができません。</p>
+				</div>
+
+			</div>
+
+			<table class="table">
+				<thead class="tbody-White">
+					<tr>
+						<th scope="col">販売数</th>
+						<th scope="col">在庫数</th>
+						<th scope="col">登録日</th>
+						<th scope="col">更新日</th>
+					</tr>
+				</thead>
+				<tbody class="tbody-White">
+					<tr>
+						<td>５０個</td>
+						<td>５０個</td>
+						<td>1234年5月6日78時90分</td>
+						<td>1234年5月6日78時90分</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+</body>
+</html>

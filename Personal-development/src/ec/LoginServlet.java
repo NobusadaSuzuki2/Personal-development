@@ -1,4 +1,4 @@
-package controller;
+package ec;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -80,7 +80,7 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("userInfo", user);
 				// ユーザ一覧のサーブレットにリダイレクト
-				response.sendRedirect("UserListServlet");
+				response.sendRedirect("IndexServlet");
 				return;
 			}
 			// ログインjspにフォワード(失敗した時に元の画面に戻る)
@@ -124,7 +124,7 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("userInfo", user);
 
 				// ユーザ一覧のサーブレットにリダイレクト
-				response.sendRedirect("UserListServlet");
+				response.sendRedirect("IndexServlet");
 				return;
 			}
 			// ログインjspにフォワード(失敗した時に元の画面に戻る)

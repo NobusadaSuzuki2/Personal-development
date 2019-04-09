@@ -1,15 +1,10 @@
 @charset "UTF-8";
 
-.container {
-  width: 1170px;
-  padding: 0 15px;
-  margin: 0 auto;
-  font-family:serif;
-}
 header {
   height: 65px;
   width: 100%;
   background-color: rgba(34, 49, 52, 0.9);
+  float: left;
 
 }
 
@@ -38,5 +33,10 @@ header {
   padding: 0 25px;
   color: white;
   display: block;
-
+  float: left;
+}
+div.homeHeader{
+	line-height: 65px;
+	padding: 0 25px;
+	float: left;
 }

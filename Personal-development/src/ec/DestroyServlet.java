@@ -1,4 +1,4 @@
-package controller;
+package ec;
 
 import java.io.IOException;
 
