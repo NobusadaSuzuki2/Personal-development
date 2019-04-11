@@ -16,8 +16,6 @@ import beans.ItemDataBeans;
  */
 public class ItemDAO {
 
-
-
 	/**
 	 * ランダムで引数指定分のItemDataBeansを取得
 	 * @param limit 取得したいかず
@@ -105,7 +103,8 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public static ArrayList<ItemDataBeans> getItemsByItemName(String searchWord, int pageNum, int pageMaxItemCount) throws SQLException {
+	public static ArrayList<ItemDataBeans> getItemsByItemName(String searchWord, int pageNum, int pageMaxItemCount)
+			throws SQLException {
 		Connection con = null;
 		PreparedStatement st = null;
 		try {
@@ -120,7 +119,7 @@ public class ItemDAO {
 			} else {
 				// 商品名検索
 				st = con.prepareStatement("SELECT * FROM m_item WHERE name LIKE ?  ORDER BY id ASC LIMIT ?,? ");
-				st.setString(1,"%" + searchWord + "%");
+				st.setString(1, "%" + searchWord + "%");
 				st.setInt(2, startiItemNum);
 				st.setInt(3, pageMaxItemCount);
 			}
@@ -148,6 +147,7 @@ public class ItemDAO {
 			}
 		}
 	}
+
 	/**
 	 * 商品総数を取得
 	 *
@@ -178,4 +178,36 @@ public class ItemDAO {
 		}
 	}
 
+	/**
+	 * 商品登録
+	 * @param itemName
+	 * @param itemPrice
+	 * @param detail
+	 * @param datafile
+	 * @return
+	 * @throws SQLException
+	 */
+	public static void setItemSignup(ItemDataBeans idb) throws SQLException {
+		Connection con = null;
+		PreparedStatement st = null;
+
+		con = DBManager.getConnection();
+		try {
+			st = con.prepareStatement(
+					"INSERT INTO m_item(name,detail,price,file_name,create_date,update_date) VALUES(?,?,?,?,now(),now())");
+			st.setString(1, idb.getName());
+			st.setString(2, idb.getDetail());
+			st.setInt(3, idb.getPrice());
+			st.setString(4, idb.getFileName());
+			st.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
 }

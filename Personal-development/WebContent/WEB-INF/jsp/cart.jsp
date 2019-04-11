@@ -10,28 +10,33 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="common.css">
-<link rel="stylesheet" href="header.css">
+<link rel="stylesheet" href="css/original/common.css">
+<link rel="stylesheet" href="css/original/header.css">
 </head>
 <header>
 	<div class="container">
 		<div class="homeHeader">
-			<a href="index.html" style="color: white !important;">HOME</a>
+			<a href="IndexServlet" style="color: white !important;">HOME</a>
+		</div>
+
+		<div class="header-right">
+			<a href="LogoutServlet" class="logout">ログアウト</a>
 		</div>
 		<div class="header-right">
-			<a href="Login.html" class="logout">ログアウト</a>
+			<a href="signupServlet" class="signup">新規登録</a>
 		</div>
 		<div class="header-right">
-			<a href="signup.html" class="signup">新規登録</a>
-		</div>
-		<div class="header-right">
-			<a href="cart.html" class="cart">カート</a>
+			<a href="CartServlet" class="cart">カート</a>
 		</div>
 	</div>
 </header>
-<body style="background-color:#e9ecef75;">
+<body style="background-color: #e9ecef75;">
 	<div class="top-wrapper">
 		<div class="container">
+
+			<c:if test="${cartActionMessage != null}">
+				<div class="alert alert-danger" role="alert">${cartActionMessage}</div>
+			</c:if>
 			<h3>買い物かご</h3>
 
 			<table class="table">
@@ -44,31 +49,17 @@
 						<th scope="col">価格</th>
 					</tr>
 				</thead>
-				<tbody  class="tbody-White">
+				<tbody class="tbody-White">
 					<tr>
 						<th scope="row">座椅子</th>
 						<td></td>
-						<td><a class="btn btn-primary" href="itemInfo.html" role="button">詳細</a>
-							<a class="btn btn-danger" href="cart.html" role="button">削除</a></td>
+						<td><a class="btn btn-primary" href="itemInfo.html"
+							role="button">詳細</a> <a class="btn btn-danger" href="cart.html"
+							role="button">削除</a></td>
 						<td></td>
 						<td>8990円</td>
 					</tr>
-					<tr>
-						<th scope="row">お茶</th>
-						<td></td>
-						<td><a class="btn btn-primary" href="itemInfo.html" role="button">詳細</a>
-							<a class="btn btn-danger" href="cart.html" role="button">削除</a></td>
-						<td></td>
-						<td>699円</td>
-					</tr>
-					<tr>
-						<th scope="row">合鍵</th>
-						<td></td>
-						<td><a class="btn btn-primary" href="itemInfo.html" role="button">詳細</a>
-							<a class="btn btn-danger" href="cart.html" role="button">削除</a></td>
-						<td></td>
-						<td>790円</td>
-					</tr>
+
 					<tr>
 						<th scope="row"></th>
 						<td></td>
@@ -81,7 +72,8 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td><a class="btn btn-success" href="index.html" role="button">買い物を続ける</a></td>
+						<td><a class="btn btn-success" href="index.html"
+							role="button">買い物を続ける</a></td>
 						<td><a class="btn btn-primary" href="buy.html" role="button">購入に進む</a>
 						</td>
 					</tr>

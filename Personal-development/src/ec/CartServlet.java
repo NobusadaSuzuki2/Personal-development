@@ -1,8 +1,8 @@
 package ec;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.User;
+import beans.ItemDataBeans;
 
 /**
- * Servlet implementation class IndexServlet
+ * Servlet implementation class CartServlet
  */
-@WebServlet("/IndexServlet")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/CartServlet")
+public class CartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public IndexServlet() {
+	public CartServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -32,16 +32,29 @@ public class IndexServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		// HttpSessionインスタンスの取得
 		HttpSession session = request.getSession();
-		// セッションスコープから"userInfo"インスタンスを取得
-		User loginId = (User) session.getAttribute("userInfo");
+		try {
+			ArrayList<ItemDataBeans> cart = (ArrayList<ItemDataBeans>) session.getAttribute("cart");
+			//セッションにカートがない場合カートを作成
+			if (cart == null) {
+				cart = new ArrayList<ItemDataBeans>();
+				session.setAttribute("cart", cart);
+			}
 
-		// ユーザ一覧のjspにフォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
-		dispatcher.forward(request, response);
+			String cartActionMessage = "";
+			//カートに商品が入っていないなら
+			if (cart.size() == 0) {
+				cartActionMessage = "カートに商品がありません";
+			}
 
+			request.setAttribute("cartActionMessage", cartActionMessage);
+			request.getRequestDispatcher(EcHelper.CART_PAGE).forward(request, response);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("Error");
+		}
 	}
 
 	/**

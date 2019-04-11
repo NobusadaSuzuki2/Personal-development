@@ -9,20 +9,20 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="common.css">
-<link rel="stylesheet" href="header.css">
+<link rel="stylesheet" href="css/original/common.css">
+<link rel="stylesheet" href="css/original/header.css">
 <title>管理者画面</title>
 </head>
 <header>
 	<div class="container">
 		<div class="homeHeader">
-			<a href="adminInfo.html" style="color: white !important;">HOME</a>
+			<a href="AdminInfoServlet" style="color: white !important;">HOME</a>
 		</div>
 		<div class="header-right">
-			<a href="Login.html" class="logout">ログアウト</a>
+			<a href="LogoutServlet" class="logout">ログアウト</a>
 		</div>
 		<div class="header-right">
-			<a href="itemSignup.html" class="signup">商品登録</a>
+			<a href="ItemSignupServlet" class="signup">商品登録</a>
 		</div>
 	</div>
 </header>
@@ -51,30 +51,17 @@
 					</tr>
 				</thead>
 				<tbody class="tbody-White">
-					<tr>
-						<td>Mark</td>
-						<td>1234年5月6日78時90分</td>
-						<td><a class="btn btn-primary" href="adminItemInfo.html" role="button">詳細</a>
-							<a class="btn btn-success" href="itemUpdate.html" role="button">更新</a>
-							<a class="btn btn-danger" href="destroy.html" role="button">削除</a>
-						</td>
-					</tr>
-					<tr>
-						<td>Mark</td>
-						<td>1234年5月6日78時90分</td>
-						<td><a class="btn btn-primary" href="adminItemInfo.html" role="button">詳細</a>
-							<a class="btn btn-success" href="itemUpdate.html" role="button">更新</a>
-							<a class="btn btn-danger" href="destroy.html" role="button">削除</a>
-						</td>
-					</tr>
-					<tr>
-						<td>Mark</td>
-						<td>1234年5月6日78時90分</td>
-						<td><a class="btn btn-primary" href="adminItemInfo.html" role="button">詳細</a>
-							<a class="btn btn-success" href="itemUpdate.html" role="button">更新</a>
-							<a class="btn btn-danger" href="destroy.html" role="button">削除</a>
-						</td>
-					</tr>
+					<c:forEach var="item" items="${itemList}">
+						<tr>
+							<td>${item.name}</td>
+							<td>${item.createDate}</td>
+							<td><a class="btn btn-primary" href="adminItemInfo.html"
+								role="button">詳細</a> <a class="btn btn-success"
+								href="itemUpdate.html" role="button">更新</a> <a
+								class="btn btn-danger" href="destroy.html" role="button">削除</a>
+							</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>

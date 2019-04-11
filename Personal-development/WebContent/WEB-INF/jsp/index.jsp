@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>商品一覧</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -17,6 +18,7 @@
 		<div class="homeHeader">
 			<a href="IndexServlet" style="color: white !important;">HOME</a>
 		</div>
+
 		<div class="header-right">
 			<a href="LogoutServlet" class="logout">ログアウト</a>
 		</div>

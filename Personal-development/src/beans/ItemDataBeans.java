@@ -13,6 +13,8 @@ public class ItemDataBeans implements Serializable {
 	private String detail;
 	private int price;
 	private String fileName;
+	private int createDate;
+	private int updateDate;
 
 
 	public int getId() {
@@ -44,6 +46,18 @@ public class ItemDataBeans implements Serializable {
 	}
 	public void setFileName(String filename) {
 		this.fileName = filename;
+	}
+	public int getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(int createDate) {
+		this.createDate = createDate;
+	}
+	public int getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(int updateDate) {
+		this.updateDate = updateDate;
 	}
 
 

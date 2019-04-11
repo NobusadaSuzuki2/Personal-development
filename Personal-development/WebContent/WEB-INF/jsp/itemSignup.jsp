@@ -9,28 +9,30 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="common.css">
-<link rel="stylesheet" href="header.css">
+<link rel="stylesheet" href="css/original/common.css">
+<link rel="stylesheet" href="css/original/header.css">
 <title>商品登録</title>
 </head>
 <header>
 	<div class="container">
 		<div class="homeHeader">
-			<a href="adminInfo.html" style="color: white !important;">HOME</a>
+			<a href="AdminInfoServlet" style="color: white !important;">HOME</a>
 		</div>
 		<div class="header-right">
-			<a href="Login.html" class="logout">ログアウト</a>
+			<a href="LogoutServlet" class="logout">ログアウト</a>
 		</div>
 	</div>
 </header>
 <body style="background-color: #e9ecef75;">
 	<div class="top-wrapper">
 		<div class="container">
+			<c:if test="${errMsg != null}">
+				<div class="alert alert-danger" role="alert">${errMsg}</div>
+			</c:if>
 			<h1>商品情報登録</h1>
 			<H1></H1>
 
-			<form action="" method="post"
-				enctype="multipart/form-data">
+			<form action="ItemSignupServlet" method="post">
 
 				<h3>
 					<input type="text" name="itemName" placeholder="商品名">
@@ -39,7 +41,9 @@
 					<input type="text" name="itemPrice" placeholder="商品価格">
 				</h3>
 
-				<h3><textarea placeholder="商品詳細"></textarea>
+				<h3>
+					<textarea style="width: 1000px; height: 150px;" name="detail"
+						placeholder="商品詳細"></textarea>
 				</h3>
 
 				<p>
@@ -47,11 +51,11 @@
 				</p>
 
 				<div class="btn-wrapper">
-					<a class="btn btn-success" href="adminInfo.html" role="button">登録</a>
+					<button class="btn btn-success" type="submit">登録</button>
 				</div>
 			</form>
 		</div>
-		<a class="btn btn-primary" href="adminInfo.html" role="button">戻る</a>
+		<a class="btn btn-primary" href="AdminInfoServlet" role="button">戻る</a>
 	</div>
 
 

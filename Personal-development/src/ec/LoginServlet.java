@@ -2,6 +2,7 @@ package ec;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,14 +37,15 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		//ログイン失敗時に使用するため
-		String inputLoginId =session.getAttribute("loginId")!=null?(String) EcHelper.cutSessionAttribute(session,"loginId"):"";
-		String loginErrorMessage = (String)EcHelper.cutSessionAttribute(session, "loginErrorMessage");
+		String inputLoginId = session.getAttribute("loginId") != null
+				? (String) EcHelper.cutSessionAttribute(session, "loginId")
+				: "";
+		String loginErrorMessage = (String) EcHelper.cutSessionAttribute(session, "loginErrorMessage");
 
 		request.setAttribute("inputLoginId", inputLoginId);
 		request.setAttribute("loginErrorMessage", loginErrorMessage);
 
 		request.getRequestDispatcher(EcHelper.LOGIN_PAGE).forward(request, response);
-
 
 	}
 
@@ -69,11 +71,17 @@ public class LoginServlet extends HttpServlet {
 			if (userId != 0) {
 				session.setAttribute("isLogin", true);
 				session.setAttribute("userId", userId);
+
+				if (loginId.equals("admin")) {
+					// ユーザ一覧のjspにフォワード
+					RequestDispatcher dispatcher = request.getRequestDispatcher("AdminInfoServlet");
+					dispatcher.forward(request, response);
+					return;
+				}
 				//ログイン前のページを取得
 				String returnStrUrl = (String) EcHelper.cutSessionAttribute(session, "returnStrUrl");
-
 				//ログイン前ページにリダイレクト。指定がない場合Index
-				response.sendRedirect(returnStrUrl!=null?returnStrUrl:"IndexServlet");
+				response.sendRedirect(returnStrUrl != null ? returnStrUrl : "IndexServlet");
 			} else {
 				session.setAttribute("loginId", loginId);
 				session.setAttribute("loginErrorMessage", "入力内容が正しくありません");

@@ -16,27 +16,28 @@
 <header>
 	<div class="container">
 		<div class="homeHeader">
-			<a href="index.html" style="color: white !important;">HOME</a>
+			<a href="IndexServlet" style="color: white !important;">HOME</a>
+		</div>
+
+		<div class="header-right">
+			<a href="LogoutServlet" class="logout">ログアウト</a>
 		</div>
 		<div class="header-right">
-			<a href="Login.html" class="logout">ログアウト</a>
+			<a href="signupServlet" class="signup">新規登録</a>
 		</div>
 		<div class="header-right">
-			<a href="signup.html" class="signup">新規登録</a>
-		</div>
-		<div class="header-right">
-			<a href="cart.html" class="cart">カート</a>
+			<a href="CartServlet" class="cart">カート</a>
 		</div>
 	</div>
 </header>
 
-<c:if test="${loginErrorMessage != null}">
-	<div class="alert alert-danger" role="alert">${loginErrorMessage}</div>
-</c:if>
 <body style="background-color: #e9ecef75;">
 	<div class="top-wrapper">
 		<div class="container">
 			<div class="login">
+				<c:if test="${loginErrorMessage != null}">
+					<div class="alert alert-danger" role="alert">${loginErrorMessage}</div>
+				</c:if>
 				<h1>ログイン画面</h1>
 				<h1></h1>
 				<form class="form-signin" action="LoginServlet" method="post">
@@ -46,19 +47,14 @@
 					<h3>
 						<input type="password" name="password" placeholder="パスワード">
 					</h3>
-
 					<div class="btn-wrapper">
-					<button class="btn btn-primary" type="submit">ログイン</button>
-				</div>
+						<button class="btn btn-primary" type="submit">ログイン</button>
+					</div>
 				</form>
 			</div>
-
 			<p>
-				まだ登録をお済みで無い方はこちらから<a href="signup.html" role="button">新規登録</a>
+				まだ登録をお済みで無い方はこちらから<a href="signupServlet" role="button">新規登録</a>
 			</p>
-
-
-
 		</div>
 	</div>
 </body>

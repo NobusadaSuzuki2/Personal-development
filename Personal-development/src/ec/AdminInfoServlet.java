@@ -8,21 +8,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import model.User;
 
 /**
- * Servlet implementation class IndexServlet
+ * Servlet implementation class AdminInfoServlet
  */
-@WebServlet("/IndexServlet")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/AdminInfoServlet")
+public class AdminInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public IndexServlet() {
+	public AdminInfoServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -33,13 +30,8 @@ public class IndexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		// HttpSessionインスタンスの取得
-		HttpSession session = request.getSession();
-		// セッションスコープから"userInfo"インスタンスを取得
-		User loginId = (User) session.getAttribute("userInfo");
-
 		// ユーザ一覧のjspにフォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminInfo.jsp");
 		dispatcher.forward(request, response);
 
 	}
