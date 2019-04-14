@@ -31,16 +31,18 @@
 	<div class="top-wrapper">
 		<div class="container">
 			<h1>商品マスター一覧</h1>
-			<h3>
-				<input type="text" name="user_name" size="10" placeholder="商品名">
-			</h3>
-			<h3>
-				<input type="text" name="example3" size="10" placeholder="登録日">
-				〜<input type="text" name="example4" size="10" placeholder="登録日">
-			</h3>
-			<div class="btn-wrapper">
-				<a class="btn btn-primary" href="#" role="button">検索</a>
-			</div>
+			<form action="AdminInfoServlet" method="post">
+				<h3>
+					<input type="text" name="itemName" size="10" placeholder="商品名">
+				</h3>
+				<h3>
+					<input type="text" name="createDate" size="10" placeholder="登録日">
+					〜<input type="text" name="createDate2" size="10" placeholder="登録日">
+				</h3>
+				<div class="btn-wrapper">
+					<button class="btn btn-primary" type="submit">検索</button>
+				</div>
+			</form>
 
 			<table class="table">
 				<thead class="thead-dark">
@@ -53,12 +55,12 @@
 				<tbody class="tbody-White">
 					<c:forEach var="item" items="${itemList}">
 						<tr>
-							<td>${item.name}</td>
+							<td style="width: 50%;">${item.name}</td>
 							<td>${item.createDate}</td>
-							<td><a class="btn btn-primary" href="adminItemInfo.html"
+							<td><a class="btn btn-primary" href="AdminItemInfoServlet?id=${item.id}"
 								role="button">詳細</a> <a class="btn btn-success"
-								href="itemUpdate.html" role="button">更新</a> <a
-								class="btn btn-danger" href="destroy.html" role="button">削除</a>
+								href="ItemUpdateServlet?id=${item.id}" role="button">更新</a> <a
+								class="btn btn-danger" href="DestroyServlet?id=${item.id}" role="button">削除</a>
 							</td>
 						</tr>
 					</c:forEach>

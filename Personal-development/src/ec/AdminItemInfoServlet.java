@@ -1,6 +1,7 @@
 package ec;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,19 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.User;
+import beans.ItemDataBeans;
+import dao.ItemDAO;
 
 /**
- * Servlet implementation class IndexServlet
+ * Servlet implementation class AdminItemInfoServlet
  */
-@WebServlet("/IndexServlet")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/AdminItemInfoServlet")
+public class AdminItemInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public IndexServlet() {
+	public AdminItemInfoServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -32,15 +34,24 @@ public class IndexServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		// HttpSessionインスタンスの取得
 		HttpSession session = request.getSession();
-		// セッションスコープから"userInfo"インスタンスを取得
-		User loginId = (User) session.getAttribute("userInfo");
+		// URLからGETパラメータとしてIDを受け取る
+		String id = request.getParameter("id");
+		//選択された商品のIDを型変換し利用
+		int ID = Integer.parseInt(id);
+		try {
+			ItemDataBeans itemInfo = ItemDAO.getItemByItemID(ID);
 
-		// 商品一覧のjspにフォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
-		dispatcher.forward(request, response);
+			// ユーザ情報をリクエストスコープにセットしてjspにフォワード
+			request.setAttribute("itemInfo", itemInfo);
+			// 商品詳細のjspにフォワード
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminItemInfo.jsp");
+			dispatcher.forward(request, response);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 
 	}
 
@@ -49,8 +60,7 @@ public class IndexServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
 	}
 
 }

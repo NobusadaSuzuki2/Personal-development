@@ -2,7 +2,6 @@ package ec;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,8 +31,6 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		// HttpSessionインスタンスの取得
 		HttpSession session = request.getSession();
 
 		//ログイン失敗時に使用するため
@@ -46,7 +43,6 @@ public class LoginServlet extends HttpServlet {
 		request.setAttribute("loginErrorMessage", loginErrorMessage);
 
 		request.getRequestDispatcher(EcHelper.LOGIN_PAGE).forward(request, response);
-
 	}
 
 	/**
@@ -73,9 +69,12 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("userId", userId);
 
 				if (loginId.equals("admin")) {
-					// ユーザ一覧のjspにフォワード
+					/*// 管理者jspにフォワード
 					RequestDispatcher dispatcher = request.getRequestDispatcher("AdminInfoServlet");
-					dispatcher.forward(request, response);
+					dispatcher.forward(request, response);*/
+
+					//管理者JSPにリダイレクト
+					response.sendRedirect("AdminInfoServlet");
 					return;
 				}
 				//ログイン前のページを取得

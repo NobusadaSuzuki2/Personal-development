@@ -1,10 +1,13 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import base.DBManager;
 import beans.ItemDataBeans;
@@ -148,6 +151,71 @@ public class ItemDAO {
 		}
 	}
 
+	//商品検索用
+	public List<ItemDataBeans> getItemsInfo(String itemName, String createDate, String createDate2) {
+		Connection conn = null;
+		List<ItemDataBeans> itemList = new ArrayList<ItemDataBeans>();
+		try {
+			// データベースへ接続
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT * FROM m_item";
+
+			if (!itemName.equals("")) {
+				sql += "  WHERE name LIKE '%" + itemName + "%'";
+				if (!createDate.equals("")) {
+					sql += " OR create_date >= '" + createDate + "'";
+				}
+				if (!createDate2.equals("")) {
+					sql += " OR create_date <= '" + createDate2 + "'";
+				}
+			} else if (!createDate.equals("")) {
+				sql += " WHERE create_date >= '" + createDate + "'";
+				if (!createDate2.equals("")) {
+					sql += " OR create_date <= '" + createDate2 + "'";
+				}
+			} else {
+				if (!createDate2.equals("")) {
+					sql += " WHERE create_date <= '" + createDate2 + "'";
+				}
+			}
+			System.out.println(sql);
+
+			// SELECTを実行し、結果表を取得
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			// 必要なデータのみインスタンスのフィールドに追加
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				String detail = rs.getString("detail");
+				int price = rs.getInt("price");
+				String fileName = rs.getString("file_name");
+				Date create_date = rs.getDate("create_date");
+				Date updateDate = rs.getDate("update_date");
+				ItemDataBeans item = new ItemDataBeans(id, name, detail, price, fileName, create_date, updateDate);
+
+				itemList.add(item);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return itemList;
+	}
+
 	/**
 	 * 商品総数を取得
 	 *
@@ -210,4 +278,56 @@ public class ItemDAO {
 			}
 		}
 	}
+
+	/**
+	 * 全てのitem情報を取得する
+	 * @return
+	 */
+	public List<ItemDataBeans> findAll() {
+		Connection conn = null;
+		List<ItemDataBeans> itemList = new ArrayList<ItemDataBeans>();
+
+		try {
+			// データベースへ接続
+			conn = DBManager.getConnection();
+
+			// SELECT文を準備
+			// TODO: 未実装：管理者以外を取得するようSQLを変更する
+			String sql = "SELECT * FROM m_item";
+
+			// SELECTを実行し、結果表を取得
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			// 結果表に格納されたレコードの内容を
+			// Userインスタンスに設定し、ArrayListインスタンスに追加
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				String detail = rs.getString("detail");
+				int price = rs.getInt("price");
+				String fileName = rs.getString("file_name");
+				Date createDate = rs.getDate("create_date");
+				Date updateDate = rs.getDate("update_date");
+				ItemDataBeans item = new ItemDataBeans(id, name, detail, price, fileName, createDate, updateDate);
+
+				itemList.add(item);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return itemList;
+	}
+
 }

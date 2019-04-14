@@ -34,7 +34,7 @@ public class ItemSignupServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		// ユーザ一覧のjspにフォワード
+		// 商品登録のjspにフォワード
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/itemSignup.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -70,7 +70,7 @@ public class ItemSignupServlet extends HttpServlet {
 
 			ItemDAO.setItemSignup(Idb);
 
-			// ユーザ一覧のサーブレットにリダイレクト
+			// 管理者画面のサーブレットにリダイレクト
 			response.sendRedirect("AdminInfoServlet");
 			return;
 		} catch (SQLException e) {

@@ -92,7 +92,7 @@ public class signupServlet extends HttpServlet {
 			// リクエストパラメータの入力項目を引数に渡して、Daoのメソッドを実行
 			UserDAO.insertUser(udb);
 
-			// ユーザ一覧のサーブレットにリダイレクト
+			// 商品一覧のサーブレットにリダイレクト
 			response.sendRedirect("IndexServlet");
 			return;
 
