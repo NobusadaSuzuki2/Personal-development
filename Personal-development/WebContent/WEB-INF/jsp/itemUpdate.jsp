@@ -9,8 +9,8 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="common.css">
-<link rel="stylesheet" href="header.css">
+<link rel="stylesheet" href="css/original/common.css">
+<link rel="stylesheet" href="css/original/header.css">
 <title>商品更新</title>
 </head>
 <header>
@@ -32,17 +32,18 @@
 			<h1>商品情報更新</h1>
 			<H1></H1>
 
-			<form action="" method="post"
-				enctype="multipart/form-data">
+			<form action="ItemUpdateServlet" method="post">
+				<input type="hidden" name="id" value="${itemid.id}">
 
 				<h3>
-					<input type="text" name="itemName" placeholder="商品名">
+					<input type="text" size="60" name="itemName" value="${itemid.name}">
 				</h3>
 				<h3>
-					<input type="text" name="itemPrice" placeholder="商品価格">
+					<input type="text" size="10" name="itemPrice" value="${itemid.price}">
 				</h3>
 
-				<h3><textarea placeholder="商品詳細"></textarea>
+				<h3>
+					<textarea style="width: 1000px; height: 150px;" name="detail" >${itemid.detail}</textarea>
 				</h3>
 
 				<p>
@@ -50,11 +51,11 @@
 				</p>
 
 				<div class="btn-wrapper">
-					<a class="btn btn-success" href="adminInfo.html" role="button">更新</a>
+					<button class="btn btn-success" type="submit">更新</button>
 				</div>
 			</form>
 		</div>
-		<a class="btn btn-primary" href="adminInfo.html" role="button">戻る</a>
+		<a class="btn btn-primary" href="AdminInfoServlet" role="button">戻る</a>
 	</div>
 
 

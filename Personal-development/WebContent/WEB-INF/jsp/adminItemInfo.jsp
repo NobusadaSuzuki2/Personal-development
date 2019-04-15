@@ -60,8 +60,8 @@
 					<tr>
 						<td>５０個</td>
 						<td>５０個</td>
-						<td>1234年5月6日78時90分</td>
-						<td>1234年5月6日78時90分</td>
+						<td>${itemInfo.createDate}</td>
+						<td>${itemInfo.updateDate}</td>
 					</tr>
 				</tbody>
 			</table>

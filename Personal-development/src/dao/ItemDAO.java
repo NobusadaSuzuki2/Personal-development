@@ -83,6 +83,8 @@ public class ItemDAO {
 				item.setDetail(rs.getString("detail"));
 				item.setPrice(rs.getInt("price"));
 				item.setFileName(rs.getString("file_name"));
+				item.setCreateDate(rs.getDate("create_date"));
+				item.setUpdateDate(rs.getDate("update_date"));
 			}
 
 			System.out.println("searching item by itemID has been completed");
@@ -327,12 +329,12 @@ public class ItemDAO {
 		return itemList;
 	}
 
-	/**item削除
+	/**商品削除
 	 *@param id
 	 *@return
 	 *@throws
 	 */
-	public void ItemDestroy(String id){
+	public void ItemDestroy(String id) {
 		Connection conn = null;
 		try {
 			//データベースへ接続
@@ -346,6 +348,88 @@ public class ItemDAO {
 			pStmt.executeUpdate();
 
 			System.out.println(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
+
+	/**商品情報更新
+	 *@param itemName
+	 *@param itemPrice
+	 *@param detail
+	 *@param datafile
+	 *@param id
+	 *@return
+	 *@throws
+	 */
+	public void itemUpdate(String itemName,String itemPrice,String detail,String datafile,String id) {
+		Connection conn = null;
+		try {
+			//データベースへ接続
+			conn = DBManager.getConnection();
+			// UPDATE文を準備
+			String sql = "UPDATE `m_item` SET name = ?, price = ?,detail = ?, file_name = ?, update_date = now() WHERE id = ?";
+
+			// DELETEを実行し、結果表を取得
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, itemName);
+			pStmt.setString(2, itemPrice);
+			pStmt.setString(3, detail);
+			pStmt.setString(4, datafile);
+			pStmt.setString(5, id);
+			pStmt.executeUpdate();
+
+			System.out.println(sql);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	/**datafileがない場合の商品情報更新
+	 *@param itemName
+	 *@param itemPrice
+	 *@param detail
+	 *@param id
+	 *@return
+	 *@throws
+	 */
+	public void itemUpdate(String itemName, String itemPrice, String detail, String id) {
+		Connection conn = null;
+		try {
+			//データベースへ接続
+			conn = DBManager.getConnection();
+			// UPDATE文を準備
+			String sql = "UPDATE `m_item` SET name = ?, price = ?,detail = ?, update_date = now() WHERE id = ?";
+
+			// DELETEを実行し、結果表を取得
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, itemName);
+			pStmt.setString(2, itemPrice);
+			pStmt.setString(3, detail);
+			pStmt.setString(4, id);
+			pStmt.executeUpdate();
+
+			System.out.println(sql);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

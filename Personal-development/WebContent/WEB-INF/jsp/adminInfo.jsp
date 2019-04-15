@@ -30,7 +30,7 @@
 <body style="background-color: #e9ecef75;">
 	<div class="top-wrapper">
 		<div class="container">
-			<h1>商品マスター一覧</h1>
+			<h1>商品一覧</h1>
 			<form action="AdminInfoServlet" method="post">
 				<h3>
 					<input type="text" name="itemName" size="10" placeholder="商品名">
