@@ -38,10 +38,9 @@ public class AdminItemInfoServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		// URLからGETパラメータとしてIDを受け取る
 		String id = request.getParameter("id");
-		//選択された商品のIDを型変換し利用
-		int ID = Integer.parseInt(id);
+
 		try {
-			ItemDataBeans itemInfo = ItemDAO.getItemByItemID(ID);
+			ItemDataBeans itemInfo = ItemDAO.getItemByItemID(id);
 
 			// ユーザ情報をリクエストスコープにセットしてjspにフォワード
 			request.setAttribute("itemInfo", itemInfo);

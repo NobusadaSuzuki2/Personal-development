@@ -36,7 +36,11 @@ public class IndexServlet extends HttpServlet {
 		// HttpSessionインスタンスの取得
 		HttpSession session = request.getSession();
 		// セッションスコープから"userInfo"インスタンスを取得
-		User loginId = (User) session.getAttribute("userInfo");
+		User loginId = (User) session.getAttribute("userId");
+		if (loginId == null) {
+			response.sendRedirect("LoginServlet");
+			return;
+		}
 
 		// 商品一覧のjspにフォワード
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");

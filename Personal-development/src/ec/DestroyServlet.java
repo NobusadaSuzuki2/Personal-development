@@ -1,6 +1,8 @@
 package ec;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.UserDao;
-import model.User;
+import beans.ItemDataBeans;
+import dao.ItemDAO;
 
 /**
  * Servlet implementation class DestroyServlet
@@ -37,25 +39,34 @@ public class DestroyServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		// HttpSessionインスタンスの取得
 		HttpSession session = request.getSession();
-		// リクエストスコープから"userInfo"インスタンスを取得
-		User loginId = (User) session.getAttribute("userInfo");
+
 		//ユーザーがログインしているか確認
-		if (loginId == null) {
+		Boolean isLogin = session.getAttribute("isLogin") != null ? (Boolean) session.getAttribute("isLogin") : false;
+		ArrayList<ItemDataBeans> cart = (ArrayList<ItemDataBeans>) session.getAttribute("cart");
+
+		//ログインしていない場合
+		if (!isLogin) {
+			// Sessionにリターンページ情報を書き込む
+			//session.setAttribute("returnStrUrl", "Buy");
+			// Login画面にリダイレクト
 			response.sendRedirect("LoginServlet");
-			return;
 		} else {
 			// URLからGETパラメータとしてIDを受け取る
 			String id = request.getParameter("id");
+			try {
+				//idを引数にして、idに紐づくユーザ情報を出力する
+				ItemDataBeans itemid = ItemDAO.getItemByItemID(id);
 
-			//idを引数にして、idに紐づくユーザ情報を出力する
-			UserDao userDao = new UserDao();
-			User userid = userDao.findByUserInfo(id);
+				// ユーザ情報をリクエストスコープにセットしてjspにフォワード
+				request.setAttribute("itemid", itemid);
 
-			// ユーザ情報をリクエストスコープにセットしてjspにフォワード
-			request.setAttribute("userid", userid);
-			// フォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/destroy.jsp");
-			dispatcher.forward(request, response);
+				// フォワード
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/destroy.jsp");
+				dispatcher.forward(request, response);
+			} catch (SQLException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -72,8 +83,8 @@ public class DestroyServlet extends HttpServlet {
 
 		try {
 			//idを引数にして、idに紐づくユーザ情報を出力する
-			UserDao userDao = new UserDao();
-			userDao.destroy(id);
+			ItemDAO itemDao = new ItemDAO();
+			itemDao.ItemDestroy(id);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			// 削除jspにフォワード(失敗した時に元の画面に戻る)
@@ -81,7 +92,7 @@ public class DestroyServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 		// ユーザ一覧のサーブレットにリダイレクト
-		response.sendRedirect("UserListServlet");
+		response.sendRedirect("AdminInfoServlet");
 		return;
 	}
 

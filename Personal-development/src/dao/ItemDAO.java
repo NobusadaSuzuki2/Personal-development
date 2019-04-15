@@ -65,14 +65,14 @@ public class ItemDAO {
 	 * @return ItemDataBeans
 	 * @throws SQLException
 	 */
-	public static ItemDataBeans getItemByItemID(int itemId) throws SQLException {
+	public static ItemDataBeans getItemByItemID(String itemId) throws SQLException {
 		Connection con = null;
 		PreparedStatement st = null;
 		try {
 			con = DBManager.getConnection();
 
 			st = con.prepareStatement("SELECT * FROM m_item WHERE id = ?");
-			st.setInt(1, itemId);
+			st.setString(1, itemId);
 
 			ResultSet rs = st.executeQuery();
 
@@ -103,7 +103,7 @@ public class ItemDAO {
 	 * @param searchWord
 	 * @param pageNum
 	 * @param pageMaxItemCount
-	 * @return
+	 * @return <ItemDataBeans>
 	 * @throws SQLException
 	 */
 	public static ArrayList<ItemDataBeans> getItemsByItemName(String searchWord, int pageNum, int pageMaxItemCount)
@@ -248,10 +248,7 @@ public class ItemDAO {
 
 	/**
 	 * 商品登録
-	 * @param itemName
-	 * @param itemPrice
-	 * @param detail
-	 * @param datafile
+	 * @param idb
 	 * @return
 	 * @throws SQLException
 	 */
@@ -282,6 +279,7 @@ public class ItemDAO {
 	/**
 	 * 全てのitem情報を取得する
 	 * @return
+	 * @throws SQLException
 	 */
 	public List<ItemDataBeans> findAll() {
 		Connection conn = null;
@@ -292,7 +290,6 @@ public class ItemDAO {
 			conn = DBManager.getConnection();
 
 			// SELECT文を準備
-			// TODO: 未実装：管理者以外を取得するようSQLを変更する
 			String sql = "SELECT * FROM m_item";
 
 			// SELECTを実行し、結果表を取得
@@ -328,6 +325,40 @@ public class ItemDAO {
 			}
 		}
 		return itemList;
+	}
+
+	/**item削除
+	 *@param id
+	 *@return
+	 *@throws
+	 */
+	public void ItemDestroy(String id){
+		Connection conn = null;
+		try {
+			//データベースへ接続
+			conn = DBManager.getConnection();
+			// DELETE文を準備
+			String sql = "DELETE FROM `m_item` WHERE id = ?";
+
+			// DELETEを実行し、結果表を取得
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, id);
+			pStmt.executeUpdate();
+
+			System.out.println(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
 	}
 
 }

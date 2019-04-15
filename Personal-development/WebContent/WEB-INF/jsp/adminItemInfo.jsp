@@ -16,13 +16,13 @@
 <header>
 	<div class="container">
 		<div class="homeHeader">
-			<a href="adminInfo.html" style="color: white !important;">HOME</a>
+			<a href="AdminInfoServlet" style="color: white !important;">HOME</a>
 		</div>
 		<div class="header-right">
-			<a href="Login.html" class="logout">ログアウト</a>
+			<a href="LogoutServlet" class="logout">ログアウト</a>
 		</div>
 		<div class="header-right">
-			<a href="itemSignup.html" class="signup">商品登録</a>
+			<a href="ItemSignupServlet" class="signup">商品登録</a>
 		</div>
 	</div>
 </header>

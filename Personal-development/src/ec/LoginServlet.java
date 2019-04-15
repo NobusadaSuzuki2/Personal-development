@@ -38,10 +38,11 @@ public class LoginServlet extends HttpServlet {
 				? (String) EcHelper.cutSessionAttribute(session, "loginId")
 				: "";
 		String loginErrorMessage = (String) EcHelper.cutSessionAttribute(session, "loginErrorMessage");
-
+		//エラーメッセージセット
 		request.setAttribute("inputLoginId", inputLoginId);
 		request.setAttribute("loginErrorMessage", loginErrorMessage);
 
+		//ログインjspへフォワード
 		request.getRequestDispatcher(EcHelper.LOGIN_PAGE).forward(request, response);
 	}
 
@@ -65,18 +66,22 @@ public class LoginServlet extends HttpServlet {
 
 			//ユーザーIDが取得できたなら
 			if (userId != 0) {
+
+				// セッションにユーザの情報をセット
 				session.setAttribute("isLogin", true);
 				session.setAttribute("userId", userId);
 
+				//管理者なら
 				if (loginId.equals("admin")) {
 					/*// 管理者jspにフォワード
 					RequestDispatcher dispatcher = request.getRequestDispatcher("AdminInfoServlet");
 					dispatcher.forward(request, response);*/
 
-					//管理者JSPにリダイレクト
+					//AdminInfoServletにリダイレクト
 					response.sendRedirect("AdminInfoServlet");
 					return;
 				}
+
 				//ログイン前のページを取得
 				String returnStrUrl = (String) EcHelper.cutSessionAttribute(session, "returnStrUrl");
 				//ログイン前ページにリダイレクト。指定がない場合Index
