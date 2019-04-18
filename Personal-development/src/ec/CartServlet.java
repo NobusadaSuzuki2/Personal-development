@@ -93,6 +93,7 @@ public class CartServlet extends HttpServlet {
 			//カート情報更新
 			session.setAttribute("cart", cart);
 			request.setAttribute("cartActionMessage", "商品を追加しました");
+
 			request.getRequestDispatcher(EcHelper.CART_PAGE).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -28,9 +28,9 @@ public class EcHelper {
 	// 購入
 	static final String BUY_PAGE = "/WEB-INF/jsp/buy.jsp";
 	// 購入確認
-	static final String BUY_CONFIRM_PAGE = "/WEB-INF/jsp/buyconfirm.jsp";
+	static final String BUY_CONFIRM_PAGE = "/WEB-INF/jsp/buyConfirm.jsp";
 	// 購入完了
-	static final String BUY_RESULT_PAGE = "/WEB-INF/jsp/buyresult.jsp";
+	static final String BUY_COMPLETE_PAGE = "/WEB-INF/jsp/buyComplete.jsp";
 	// ユーザー情報
 	static final String USER_DATA_PAGE = "/WEB-INF/jsp/userdata.jsp";
 	// ユーザー情報更新確認

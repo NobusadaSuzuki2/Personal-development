@@ -10,25 +10,26 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="common.css">
-<link rel="stylesheet" href="header.css">
+<link rel="stylesheet" href="css/original/common.css">
+<link rel="stylesheet" href="css/original/header.css">
 </head>
-	<header>
-		<div class="container">
-			<div class="homeHeader">
-				<a href="index.html" style="color: white !important;">HOME</a>
-			</div>
-			<div class="header-right">
-				<a href="Login.html" class="logout">ログアウト</a>
-			</div>
-			<div class="header-right">
-				<a href="signup.html" class="signup">新規登録</a>
-			</div>
-			<div class="header-right">
-				<a href="cart.html" class="cart">カート</a>
-			</div>
+<header>
+	<div class="container">
+		<div class="homeHeader">
+			<a href="IndexServlet" style="color: white !important;">HOME</a>
 		</div>
-	</header>
+
+		<div class="header-right">
+			<a href="LogoutServlet" class="logout">ログアウト</a>
+		</div>
+		<div class="header-right">
+			<a href="signupServlet" class="signup">新規登録</a>
+		</div>
+		<div class="header-right">
+			<a href="CartServlet" class="cart">カート</a>
+		</div>
+	</div>
+</header>
 <body style="background-color: #e9ecef75;">
 	<div class="top-wrapper">
 		<div class="container">
@@ -43,8 +44,8 @@
 				</thead>
 				<tbody class="tbody-White">
 					<tr>
-						<th><h5>東京都中央区日本橋箱崎町２７−２ 渡菊第3ビル６階</h5></th>
-						<td><h5>second</h5></td>
+						<th><h5>${udb.address}</h5></th>
+						<td><h5>${udb.name}</h5></td>
 					</tr>
 				</tbody>
 			</table>
@@ -60,47 +61,35 @@
 					</tr>
 				</thead>
 				<tbody class="tbody-White">
-					<tr>
-						<th scope="row">座椅子</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td>8990円</td>
-					</tr>
-					<tr>
-						<th scope="row">お茶</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td>699円</td>
-					</tr>
-					<tr>
-						<th scope="row">合鍵</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td>790円</td>
-					</tr>
+					<c:forEach var="item" items="${cart}" varStatus="status">
+						<tr>
+							<th scope="row">${item.name}</th>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>${item.price}円</td>
+						</tr>
+					</c:forEach>
 					<tr>
 						<td></td>
 						<td></td>
 						<td>配送方法</td>
-						<td>特急便</td>
-						<td>500円</td>
+						<td>${bdb.deliveryMethodName}</td>
+						<td>${bdb.deliveryMethodPrice}円</td>
 					</tr>
 					<tr>
 						<th scope="row"></th>
 						<td></td>
 						<td></td>
 						<td>合計金額</td>
-						<td>10979円</td>
+						<td>${bdb.totalPrice}円</td>
 					</tr>
 					<tr>
 						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td><a class="btn btn-success" href="buyComplete.html"
+						<td><a class="btn btn-success" href="BuyCompleteServlet"
 							role="button">購入を確定する</a></td>
 
 					</tr>

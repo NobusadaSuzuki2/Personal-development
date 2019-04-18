@@ -43,7 +43,7 @@
 				<table class="table">
 					<thead class="thead-dark">
 						<tr>
-							<th scope="col" align="left">商品名</th>
+							<th scope="col" style="width:60%;" align="left">商品名</th>
 							<th scope="col"></th>
 							<th scope="col"></th>
 							<th scope="col">価格</th>
@@ -80,7 +80,7 @@
 							<td><button class="btn btn-danger" type="submit">削除</button></td>
 							<td><a class="btn btn-success" href="IndexServlet"
 								role="button">買い物を続ける</a></td>
-							<td><a class="btn btn-primary" href="buy.html" role="button">購入に進む</a>
+							<td><a class="btn btn-primary" href="BuyServlet" role="button">購入に進む</a>
 							</td>
 						</tr>
 					</tbody>
