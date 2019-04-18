@@ -78,11 +78,14 @@ public class DestroyServlet extends HttpServlet {
 		// リクエストパラメータの文字コードを指定
 		request.setCharacterEncoding("UTF-8");
 
+		// セッション
+		HttpSession session = request.getSession();
+
 		// hiddenがついたインプットのformからIDパラメータを受け取る
 		String id = request.getParameter("id");
-
+		String loginId = (String) session.getAttribute("userId");
 		try {
-			//idを引数にして、idに紐づくユーザ情報を出力する
+			//idを引数にして、idに紐づくアイテム情報を出力する
 			ItemDAO itemDao = new ItemDAO();
 			itemDao.ItemDestroy(id);
 		} catch (NullPointerException e) {
@@ -91,9 +94,14 @@ public class DestroyServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/destroy.jsp");
 			dispatcher.forward(request, response);
 		}
-		// ユーザ一覧のサーブレットにリダイレクト
-		response.sendRedirect("AdminInfoServlet");
-		return;
+		if (loginId.equals("admin")) {
+			// 商品一覧のサーブレットにリダイレクト
+			response.sendRedirect("AdminInfoServlet");
+			return;
+		} else {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/cart.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 
 }

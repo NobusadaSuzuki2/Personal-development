@@ -18,14 +18,14 @@ import dao.ItemDAO;
 /**
  * Servlet implementation class IndexServlet
  */
-@WebServlet("/IndexServlet")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/SearchServlet")
+public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public IndexServlet() {
+	public SearchServlet() {
 		super();
 	}
 
@@ -41,26 +41,9 @@ public class IndexServlet extends HttpServlet {
 			ArrayList<ItemDataBeans> itemList = ItemDAO.getRandItem(8);
 			// ユーザ情報をリクエストスコープにセットしてjspにフォワード
 			request.setAttribute("itemList", itemList);
+			//1ページに表示する商品数
+			int maxItem = 8;
 
-			// 商品一覧のjspにフォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
-			dispatcher.forward(request, response);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		//1ページに表示する商品数
-		int maxItem = 8;
-		// HttpSessionインスタンスの取得
-		HttpSession session = request.getSession();
-		try {
 			//jspからsearchをパラメーターで取得
 			String search = request.getParameter("search");
 			//表示ページ番号 未指定の場合 1ページ目を表示
@@ -93,6 +76,14 @@ public class IndexServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 
 	}
 

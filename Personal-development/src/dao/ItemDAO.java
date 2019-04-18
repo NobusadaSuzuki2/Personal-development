@@ -99,7 +99,46 @@ public class ItemDAO {
 			}
 		}
 	}
+	/**
+	 * int型による商品IDによる商品検索
+	 * @param itemId
+	 * @return ItemDataBeans
+	 * @throws SQLException
+	 */
+	public static ItemDataBeans getItemByItemID(int itemId) throws SQLException {
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			con = DBManager.getConnection();
 
+			st = con.prepareStatement("SELECT * FROM m_item WHERE id = ?");
+			st.setInt(1, itemId);
+
+			ResultSet rs = st.executeQuery();
+
+			ItemDataBeans item = new ItemDataBeans();
+			if (rs.next()) {
+				item.setId(rs.getInt("id"));
+				item.setName(rs.getString("name"));
+				item.setDetail(rs.getString("detail"));
+				item.setPrice(rs.getInt("price"));
+				item.setFileName(rs.getString("file_name"));
+				item.setCreateDate(rs.getDate("create_date"));
+				item.setUpdateDate(rs.getDate("update_date"));
+			}
+
+			System.out.println("searching item by itemID has been completed");
+
+			return item;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
 	/**
 	 * 商品検索
 	 * @param searchWord
@@ -153,7 +192,7 @@ public class ItemDAO {
 		}
 	}
 
-	//商品検索用
+	//管理者:商品検索用
 	public List<ItemDataBeans> getItemsInfo(String itemName, String createDate, String createDate2) {
 		Connection conn = null;
 		List<ItemDataBeans> itemList = new ArrayList<ItemDataBeans>();

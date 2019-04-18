@@ -34,51 +34,58 @@
 	<div class="top-wrapper">
 		<div class="container">
 
-			<c:if test="${cartActionMessage != null}">
-				<div class="alert alert-danger" role="alert">${cartActionMessage}</div>
-			</c:if>
+			<div class="alert" style="color: #e25f6b;" role="alert">
+				<h1>${cartActionMessage}</h1>
+			</div>
+
 			<h3>買い物かご</h3>
+			<form action="ItemDeleteServlet" method="POST">
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col" align="left">商品名</th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+							<th scope="col">価格</th>
+						</tr>
+					</thead>
+					<tbody class="tbody-White">
+						<c:forEach var="item" items="${cart}" varStatus="status">
 
-			<table class="table">
-				<thead class="thead-dark">
-					<tr>
-						<th scope="col">商品名</th>
-						<th scope="col"></th>
-						<th scope="col"></th>
-						<th scope="col"></th>
-						<th scope="col">価格</th>
-					</tr>
-				</thead>
-				<tbody class="tbody-White">
-					<tr>
-						<th scope="row">座椅子</th>
-						<td></td>
-						<td><a class="btn btn-primary" href="itemInfo.html"
-							role="button">詳細</a> <a class="btn btn-danger" href="cart.html"
-							role="button">削除</a></td>
-						<td></td>
-						<td>8990円</td>
-					</tr>
+							<tr>
+								<th scope="row"><a href="ItemInfoServlet?id=${item.id}">${item.name}</a><input
+									type="hidden" name="item.id" value="${itrem.id}"></th>
+								<td>
+									<p>
+										<input type="checkbox" name="delete_item_id_list"
+											value="${item.id}" /> <label for="${status.index}">削除</label>
+									</p>
+								</td>
 
-					<tr>
-						<th scope="row"></th>
-						<td></td>
-						<td></td>
-						<td>合計金額</td>
-						<td>10479円</td>
-					</tr>
+								<td></td>
+								<td>${item.price}円</td>
+							</tr>
 
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td><a class="btn btn-success" href="index.html"
-							role="button">買い物を続ける</a></td>
-						<td><a class="btn btn-primary" href="buy.html" role="button">購入に進む</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+						</c:forEach>
+
+						<tr>
+							<th scope="row"></th>
+							<td></td>
+							<td>合計金額</td>
+							<td>${bdb.totalPrice}円</td>
+						</tr>
+
+						<tr>
+							<td></td>
+							<td><button class="btn btn-danger" type="submit">削除</button></td>
+							<td><a class="btn btn-success" href="IndexServlet"
+								role="button">買い物を続ける</a></td>
+							<td><a class="btn btn-primary" href="buy.html" role="button">購入に進む</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
 		</div>
 	</div>
 </body>

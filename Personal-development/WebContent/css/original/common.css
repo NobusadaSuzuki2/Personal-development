@@ -1,14 +1,14 @@
 @charset "UTF-8";
 
 .container {
-	width: 1170px;
 	padding: 0 15px;
 	margin: 0 auto;
 	font-family: serif;
+	max-width: 1500px !important;
 }
 
 .top-wrapper {
-	padding: 180px 0 100px 0 ;
+	padding: 180px 0 100px 0;
 	background-size: cover;
 	text-align: center;
 }
@@ -61,22 +61,46 @@
 	text-align: center !important;
 	margin: 0 auto !important;
 }
-.userBack{
+
+.userBack {
 	box-sizing: content-box;
 }
 
-.card{
-	padding: 100px 0px !important;
+.card-top {
+	height: 500px;
+	width: 25%;
+	margin-left: auto;
+	left: auto;
+	right: auto;
+	float: left;
+	box-sizing: border-box;
+	padding: 0 0.75rem;
+	min-height: 1px;
 }
-.card-body{
+
+.card {
+	height: 500px;
+	position: relative;
+	margin: 0.5rem 0rem 1rem 0;
+	background-color: #fff;
+	transition: box-shadow .25s;
+	border-radius: 2px;
+}
+
+.card-content {
+	height: 100%;
+	padding: 24px;
+}
+
+.card-title {
+	display: block;
+}
+
+.card-body {
 	padding: 100px auto !important;
 }
-.tbody-White{
-	background-color:#f8f9fa;
-	box-shadow:3px 3px 3px 3px #adb5bd;
-}
-.itemImage{
-	width: 25%;
-	padding: 10px 24px;
-	float: left;
+
+.tbody-White {
+	background-color: #f8f9fa;
+	box-shadow: 3px 3px 3px 3px #adb5bd;
 }
