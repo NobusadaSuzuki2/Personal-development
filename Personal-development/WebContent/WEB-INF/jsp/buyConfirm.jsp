@@ -49,52 +49,51 @@
 					</tr>
 				</tbody>
 			</table>
-
-			<table class="table">
-				<thead class="thead-dark">
-					<tr>
-						<th scope="col">商品名</th>
-						<th scope="col"></th>
-						<th scope="col"></th>
-						<th scope="col"></th>
-						<th scope="col">価格</th>
-					</tr>
-				</thead>
-				<tbody class="tbody-White">
-					<c:forEach var="item" items="${cart}" varStatus="status">
+			<form action="BuyCompleteServlet" method="POST">
+				<table class="table">
+					<thead class="thead-dark">
 						<tr>
-							<th scope="row">${item.name}</th>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td>${item.price}円</td>
+							<th scope="col">商品名</th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+							<th scope="col">価格</th>
 						</tr>
-					</c:forEach>
-					<tr>
-						<td></td>
-						<td></td>
-						<td>配送方法</td>
-						<td>${bdb.deliveryMethodName}</td>
-						<td>${bdb.deliveryMethodPrice}円</td>
-					</tr>
-					<tr>
-						<th scope="row"></th>
-						<td></td>
-						<td></td>
-						<td>合計金額</td>
-						<td>${bdb.totalPrice}円</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td><a class="btn btn-success" href="BuyCompleteServlet"
-							role="button">購入を確定する</a></td>
-
-					</tr>
-				</tbody>
-			</table>
+					</thead>
+					<tbody class="tbody-White">
+						<c:forEach var="item" items="${cart}" varStatus="status">
+							<tr>
+								<th scope="row">${item.name}</th>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>${item.price}円</td>
+							</tr>
+						</c:forEach>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>配送方法</td>
+							<td>${bdb.deliveryMethodName}</td>
+							<td>${bdb.deliveryMethodPrice}円</td>
+						</tr>
+						<tr>
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+							<td>合計金額</td>
+							<td>${bdb.totalPrice}円</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><button class="btn btn-success" type="submit">購入を確定する</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
 		</div>
 	</div>
 </body>

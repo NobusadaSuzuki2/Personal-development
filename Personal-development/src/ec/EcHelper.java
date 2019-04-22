@@ -32,13 +32,15 @@ public class EcHelper {
 	// 購入完了
 	static final String BUY_COMPLETE_PAGE = "/WEB-INF/jsp/buyComplete.jsp";
 	// ユーザー情報
-	static final String USER_DATA_PAGE = "/WEB-INF/jsp/userdata.jsp";
+	static final String USER_SHOW_PAGE = "/WEB-INF/jsp/usershow.jsp";
 	// ユーザー情報更新確認
 	static final String USER_DATA_UPDATE_CONFIRM_PAGE = "/WEB-INF/jsp/userdataupdateconfirm.jsp";
 	// ユーザー情報更新完了
 	static final String USER_DATA_UPDATA_RESULT_PAGE = "/WEB-INF/jsp/userdataupdateresult.jsp";
 	// ユーザー購入履歴
-	static final String USER_BUY_HISTORY_DETAIL_PAGE = "/WEB-INF/jsp/userbuyhistorydetail.jsp";
+	static final String USER_BUY_HISTORY_PAGE = "/WEB-INF/jsp/userBuyHistory.jsp";
+	// ユーザー購入履歴詳細
+	static final String BUY_INFO_PAGE = "/WEB-INF/jsp/buyInfo.jsp";
 	// ログイン
 	static final String LOGIN_PAGE = "/WEB-INF/jsp/Login.jsp";
 	// ログアウト

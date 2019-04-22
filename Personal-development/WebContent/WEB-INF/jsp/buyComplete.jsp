@@ -34,8 +34,8 @@
 	<div class="top-wrapper">
 		<div class="container">
 			<h3>購入が完了しました</h3>
-			<a class="btn btn-success" href="index.html" role="button">引き続き買い物をする</a>
-			<a class="btn btn-success" href="show.html" role="button">ユーザー情報へ</a>
+			<a class="btn btn-success" href="IndexServlet" role="button">引き続き買い物をする</a>
+			<a class="btn btn-success" href="UserShowServlet" role="button">ユーザー情報へ</a>
 		</div>
 	</div>
 

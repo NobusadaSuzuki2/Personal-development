@@ -9,23 +9,24 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="common.css">
-<link rel="stylesheet" href="header.css">
+<link rel="stylesheet" href="css/original/common.css">
+<link rel="stylesheet" href="css/original/header.css">
 <title>購入詳細</title>
 </head>
 <header>
 	<div class="container">
 		<div class="homeHeader">
-			<a href="index.html" style="color: white !important;">HOME</a>
+			<a href="IndexServlet" style="color: white !important;">HOME</a>
+		</div>
+
+		<div class="header-right">
+			<a href="LogoutServlet" class="logout">ログアウト</a>
 		</div>
 		<div class="header-right">
-			<a href="Login.html" class="logout">ログアウト</a>
+			<a href="signupServlet" class="signup">新規登録</a>
 		</div>
 		<div class="header-right">
-			<a href="signup.html" class="signup">新規登録</a>
-		</div>
-		<div class="header-right">
-			<a href="cart.html" class="cart">カート</a>
+			<a href="CartServlet" class="cart">カート</a>
 		</div>
 	</div>
 </header>

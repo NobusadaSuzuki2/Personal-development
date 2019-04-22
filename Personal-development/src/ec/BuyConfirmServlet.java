@@ -42,6 +42,9 @@ public class BuyConfirmServlet extends HttpServlet {
 		try {
 			// ログイン時に取得したユーザーIDをセッションから取得
 			int userId = (int) session.getAttribute("userId");
+			if(userId == 0) {
+				response.sendRedirect("LoginServlet");
+			}
 			// 更新確認画面から戻ってきた場合Sessionから取得。それ以外はuserIdでユーザーを取得
 			UserDataBeans udb = session.getAttribute("returnUDB") == null ? UserDAO.getUserDataBeansByUserId(userId)
 					: (UserDataBeans) EcHelper.cutSessionAttribute(session, "returnUDB");
@@ -73,12 +76,13 @@ public class BuyConfirmServlet extends HttpServlet {
 			bdb.setDeliveryMethodPrice(userSelectDMB.getPrice());
 
 			//購入確定で利用
-			request.setAttribute("bdb", bdb);
+			session.setAttribute("bdb", bdb);
 			//フォワード
 			request.getRequestDispatcher(EcHelper.BUY_CONFIRM_PAGE).forward(request, response);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
+			response.sendRedirect("LoginServlet");
 		}
 	}
 
