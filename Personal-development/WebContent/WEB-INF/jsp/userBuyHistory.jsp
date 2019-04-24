@@ -12,22 +12,10 @@
 <link rel="stylesheet" href="css/original/common.css">
 <link rel="stylesheet" href="css/original/header.css">
 <title>購入履歴</title>
+<jsp:include page="/baselayout/head.html" />
 </head>
 <header>
-	<div class="container">
-		<div class="homeHeader">
-			<a href="IndexServlet" style="color: white !important;">HOME</a>
-		</div>
-		<div class="header-right">
-			<a href="LogoutServlet" class="logout">ログアウト</a>
-		</div>
-		<div class="header-right">
-			<a href="signupServlet" class="signup">新規登録</a>
-		</div>
-		<div class="header-right">
-			<a href="CartServlet" class="cart">カート</a>
-		</div>
-	</div>
+	<jsp:include page="/baselayout/header.jsp" />
 </header>
 <body style="background-color: #e9ecef75;">
 
@@ -36,9 +24,6 @@
 
 			<h1>購入履歴</h1>
 			<form action="UserBuyHistoryServlet" method="Post">
-				<h3>
-					<input type="text" name="item_name" placeholder="商品名">
-				</h3>
 				<h3>
 					<input type="text" name="buyDay" size="10" placeholder="購入日">
 					〜 <input type="text" name="buyDay2" size="10" placeholder="購入日">
@@ -52,6 +37,7 @@
 				<thead class="thead-dark">
 					<tr>
 						<th></th>
+						<th>購入ID</th>
 						<th>購入日</th>
 						<th>合計金額</th>
 					</tr>
@@ -61,6 +47,7 @@
 						<tr>
 							<th><a class="btn btn-primary" href="BuyInfoServlet?id=${bdb.id}"
 								role="button">詳細</a></th>
+								<th>${bdb.id}</th>
 							<th>${bdb.buyDate}</th>
 							<th>${bdb.totalPrice}円</th>
 						</tr>

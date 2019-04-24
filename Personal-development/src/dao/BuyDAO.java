@@ -1,11 +1,11 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import base.DBManager;
@@ -30,12 +30,11 @@ public class BuyDAO {
 		try {
 			con = DBManager.getConnection();
 			st = con.prepareStatement(
-					"INSERT INTO t_buy(user_id,total_price,delivery_method_id,create_date) VALUES(?,?,?,?)",
+					"INSERT INTO t_buy(user_id,total_price,delivery_method_id,create_date) VALUES(?,?,?,now())",
 					Statement.RETURN_GENERATED_KEYS);
 			st.setInt(1, bdb.getUserId());
 			st.setInt(2, bdb.getTotalPrice());
 			st.setInt(3, bdb.getDelivertMethodId());
-			st.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
 			st.executeUpdate();
 
 			ResultSet rs = st.getGeneratedKeys();
@@ -70,10 +69,7 @@ public class BuyDAO {
 			con = DBManager.getConnection();
 
 			st = con.prepareStatement(
-					"SELECT * FROM t_buy"
-							+ " JOIN m_delivery_method"
-							+ " ON t_buy.delivery_method_id = m_delivery_method.id"
-							+ " WHERE t_buy.id = ?");
+					"SELECT * FROM t_buy JOIN m_delivery_method ON t_buy.delivery_method_id = m_delivery_method.id WHERE t_buy.id = ?");
 			st.setInt(1, buyId);
 
 			ResultSet rs = st.executeQuery();
@@ -82,7 +78,7 @@ public class BuyDAO {
 			if (rs.next()) {
 				bdb.setId(rs.getInt("id"));
 				bdb.setTotalPrice(rs.getInt("total_price"));
-				bdb.setBuyDate(rs.getTimestamp("create_date"));
+				bdb.setBuyDate(rs.getDate("create_date"));
 				bdb.setDelivertMethodId(rs.getInt("delivery_method_id"));
 				bdb.setUserId(rs.getInt("user_id"));
 				bdb.setDeliveryMethodPrice(rs.getInt("price"));
@@ -101,6 +97,7 @@ public class BuyDAO {
 			}
 		}
 	}
+
 	//ユーザーIDによる購入情報List検索
 	public static ArrayList<BuyDataBeans> getBuyDataBeansUserIdBuyId(int userId) throws SQLException {
 		Connection con = null;
@@ -110,9 +107,9 @@ public class BuyDAO {
 
 			st = con.prepareStatement(
 					"SELECT * FROM t_buy "
-					+ "JOIN m_delivery_method "
-					+ "ON t_buy.delivery_method_id = m_delivery_method.id "
-					+ "WHERE t_buy.user_id = ?");
+							+ "JOIN m_delivery_method "
+							+ "ON t_buy.delivery_method_id = m_delivery_method.id "
+							+ "WHERE t_buy.user_id = ?");
 			st.setInt(1, userId);
 
 			//ResultSet rs = st.executeQuery();
@@ -126,7 +123,7 @@ public class BuyDAO {
 				BuyDataBeans bdb = new BuyDataBeans();
 				bdb.setId(rs.getInt("id"));
 				bdb.setTotalPrice(rs.getInt("total_price"));
-				bdb.setBuyDate(rs.getTimestamp("create_date"));
+				bdb.setBuyDate(rs.getDate("create_date"));
 				bdb.setDelivertMethodId(rs.getInt("delivery_method_id"));
 				bdb.setUserId(rs.getInt("user_id"));
 				bdb.setDeliveryMethodPrice(rs.getInt("price"));
@@ -157,4 +154,58 @@ public class BuyDAO {
 			}
 		}
 	}
+
+	public static ArrayList<BuyDataBeans> getBuyDstaInfo(String createDate, String createDate2, int userId) {
+		Connection conn = null;
+		ArrayList<BuyDataBeans> itemList = new ArrayList<BuyDataBeans>();
+		try {
+			// データベースへ接続
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT * FROM t_buy JOIN `t_buy_detail` ON t_buy.id = t_buy_detail.`buy_id` "
+					+ "WHERE user_id = 5";
+
+			if (!createDate.equals("")) {
+				sql += " AND create_date >= '" + createDate + "'";
+
+			} else {
+				if (!createDate2.equals("")) {
+					sql += " AND create_date <= '" + createDate2 + "'";
+				}
+			}
+			System.out.println(sql);
+
+			// SELECTを実行し、結果表を取得
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			// 必要なデータのみインスタンスのフィールドに追加
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				int user_id = rs.getInt("user_id");
+				int totalPrice = rs.getInt("total_price");
+				int delivertMethodId = rs.getInt("delivery_method_id");
+				Date buyDate = rs.getDate("create_date");
+				BuyDataBeans item = new BuyDataBeans(id, user_id, totalPrice, delivertMethodId, buyDate);
+
+				itemList.add(item);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return itemList;
+	}
+
 }

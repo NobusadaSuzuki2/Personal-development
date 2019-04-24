@@ -12,28 +12,15 @@
 <link rel="stylesheet" href="css/original/common.css">
 <link rel="stylesheet" href="css/original/header.css">
 <title>購入詳細</title>
+<jsp:include page="/baselayout/head.html" />
 </head>
 <header>
-	<div class="container">
-		<div class="homeHeader">
-			<a href="IndexServlet" style="color: white !important;">HOME</a>
-		</div>
-
-		<div class="header-right">
-			<a href="LogoutServlet" class="logout">ログアウト</a>
-		</div>
-		<div class="header-right">
-			<a href="signupServlet" class="signup">新規登録</a>
-		</div>
-		<div class="header-right">
-			<a href="CartServlet" class="cart">カート</a>
-		</div>
-	</div>
+	<jsp:include page="/baselayout/header.jsp" />
 </header>
-<body style="background-color:#e9ecef75;">
+<body style="background-color: #e9ecef75;">
 	<div class="top-wrapper">
 		<div class="container">
-			<h1>購入ID</h1>
+			<h1>購入詳細</h1>
 			<table class="table">
 				<thead class="thead-dark">
 					<tr>
@@ -44,9 +31,9 @@
 				</thead>
 				<tbody class="tbody-White">
 					<tr>
-						<th>1234年5月6日78時90分</th>
-						<th><h5>東京都中央区日本橋箱崎町２７−２ 渡菊第3ビル６階</h5></th>
-						<td><h5>second</h5></td>
+						<th>${bdb.buyDate}</th>
+						<th><h5>${udb.address}</h5></th>
+						<td><h5>${udb.name}</h5></td>
 					</tr>
 				</tbody>
 			</table>
@@ -62,40 +49,28 @@
 					</tr>
 				</thead>
 				<tbody class="tbody-White">
-					<tr>
-						<th scope="row">座椅子</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td>8990円</td>
-					</tr>
-					<tr>
-						<th scope="row">お茶</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td>699円</td>
-					</tr>
-					<tr>
-						<th scope="row">合鍵</th>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td>790円</td>
-					</tr>
+					<c:forEach var="item" items="${itemList}">
+						<tr>
+							<th scope="row">${item.name}</th>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>${item.price}円</td>
+						</tr>
+					</c:forEach>
 					<tr>
 						<td></td>
 						<td></td>
 						<td>配送方法</td>
-						<td>特急便</td>
-						<td>500円</td>
+						<td>${bdb.deliveryMethodName}</td>
+						<td>${bdb.deliveryMethodPrice}円</td>
 					</tr>
 					<tr>
 						<th scope="row"></th>
 						<td></td>
 						<td></td>
 						<td>合計金額</td>
-						<td>10979円</td>
+						<td>${bdb.totalPrice}円</td>
 					</tr>
 				</tbody>
 			</table>

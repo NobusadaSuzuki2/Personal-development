@@ -12,23 +12,10 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" href="css/original/common.css">
 <link rel="stylesheet" href="css/original/header.css">
+<jsp:include page="/baselayout/head.html" />
 </head>
 <header>
-	<div class="container">
-		<div class="homeHeader">
-			<a href="IndexServlet" style="color: white !important;">HOME</a>
-		</div>
-
-		<div class="header-right">
-			<a href="LogoutServlet" class="logout">ログアウト</a>
-		</div>
-		<div class="header-right">
-			<a href="signupServlet" class="signup">新規登録</a>
-		</div>
-		<div class="header-right">
-			<a href="CartServlet" class="cart">カート</a>
-		</div>
-	</div>
+	<jsp:include page="/baselayout/header.jsp" />
 </header>
 <body style="background-color: #e9ecef75;">
 	<div class="top-wrapper">

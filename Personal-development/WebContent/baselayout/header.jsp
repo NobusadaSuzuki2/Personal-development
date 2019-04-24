@@ -1,30 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-<link rel="stylesheet" href="css/original/common.css">
-<link rel="stylesheet" href="css/original/header.css">
-</head>
-<header>
+<nav class="red darken-4" role="navigation">
 	<div class="container">
+
 		<div class="homeHeader">
-			<a href="index.html" style="color: white !important;">HOME</a>
+			<a href="IndexServlet" style="color: white !important;">HOME</a>
 		</div>
+		<%
+			boolean isLogin = session.getAttribute("isLogin") != null ? (boolean) session.getAttribute("isLogin")
+					: false;
+		%>
+		<%
+			if (isLogin) {
+		%>
 		<div class="header-right">
-			<a href="Login.html" class="logout">ログアウト</a>
+			<a href="LogoutServlet"><i class="material-icons">exit_to_app</i></a>
 		</div>
+		<%
+			} else {
+		%>
 		<div class="header-right">
-			<a href="signup.html" class="signup">新規登録</a>
+			<a href="LoginServlet"><i class="material-icons">vpn_key</i></a>
 		</div>
+		<%
+			}
+		%>
+
 		<div class="header-right">
-			<a href="cart.html" class="cart">カート</a>
+			<a href="CartServlet"><i class="material-icons">shopping_cart</i></a>
 		</div>
+		<%
+			if (isLogin) {
+		%><div class="header-right">
+			<a href="UserShowServlet"><i class="material-icons">account_circle</i></a>
+		</div>
+		<%
+			} else {
+		%>
+
+		<div class="header-right">
+			<a href="Regist"><i class="material-icons">add</i></a>
+		</div>
+		<%
+			}
+		%>
 	</div>
-</header>
+</nav>

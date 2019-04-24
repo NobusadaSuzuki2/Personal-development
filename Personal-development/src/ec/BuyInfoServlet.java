@@ -12,7 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.BuyDataBeans;
+import beans.ItemDataBeans;
+import beans.UserDataBeans;
 import dao.BuyDAO;
+import dao.ItemDAO;
+import dao.UserDAO;
 
 /**
  * Servlet implementation class BuyInfoServlet
@@ -36,13 +40,24 @@ public class BuyInfoServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// HttpSessionインスタンスの取得
 		HttpSession session = request.getSession();
-		// ログイン時に取得したユーザーIDをセッションから取得
-		int userId = (int) session.getAttribute("userId");
 		try {
-			//インスタンスを生成し、購入情報を取得
-			ArrayList<BuyDataBeans> bdbList = new ArrayList<BuyDataBeans>();
-			bdbList = BuyDAO.getBuyDataBeansUserIdBuyId(userId);
-			session.setAttribute("bdbList", bdbList);
+			//セッションからユーザーIdを取得
+			int userId = (int) session.getAttribute("userId");
+			// URLからGETパラメータとしてIDを受け取る
+			String id = request.getParameter("id");
+			int buyId = Integer.parseInt(id);
+
+			//インスタンスを生成し、ユーザー情報を取得、セット
+			UserDataBeans udb = UserDAO.getUserDataBeansByUserId(userId);
+			request.setAttribute("udb", udb);
+
+			//インスタンスを生成し、購入情報を取得、セット
+			BuyDataBeans bdb = BuyDAO.getBuyDataBeansByBuyId(buyId);
+			request.setAttribute("bdb", bdb);
+
+			//インスタンスを生成し、アイテム情報を取得、セット
+			ArrayList<ItemDataBeans> itemList = ItemDAO.getItemBybuyId(buyId);
+			request.setAttribute("itemList", itemList);
 
 			//フォワード
 			request.getRequestDispatcher(EcHelper.BUY_INFO_PAGE).forward(request, response);

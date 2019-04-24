@@ -36,9 +36,12 @@ public class UserBuyHistoryServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// HttpSessionインスタンスの取得
 		HttpSession session = request.getSession();
-		// ログイン時に取得したユーザーIDをセッションから取得
-		int userId = (int) session.getAttribute("userId");
+		// リクエストパラメータの文字コードを指定
+		request.setCharacterEncoding("UTF-8");
 		try {
+			// ログイン時に取得したユーザーIDをセッションから取得
+			int userId = (int) session.getAttribute("userId");
+
 			//インスタンスを生成し、購入情報を取得
 			ArrayList<BuyDataBeans> bdbList = new ArrayList<BuyDataBeans>();
 			bdbList = BuyDAO.getBuyDataBeansUserIdBuyId(userId);
@@ -58,6 +61,18 @@ public class UserBuyHistoryServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// HttpSessionインスタンスの取得
+		HttpSession session = request.getSession();
+		// リクエストパラメータの文字コードを指定
+		request.setCharacterEncoding("UTF-8");
+		// ログイン時に取得したユーザーIDをセッションから取得
+		int userId = (int) session.getAttribute("userId");
+
+		String buyDay = request.getParameter("buyDay");
+		String buyDay2 = request.getParameter("buyDay2");
+
+		ArrayList<BuyDataBeans> bdbList = BuyDAO.getBuyDstaInfo(buyDay, buyDay2,userId);
+		request.setAttribute("bdbList", bdbList);
 
 		//フォワード
 		request.getRequestDispatcher(EcHelper.USER_BUY_HISTORY_PAGE).forward(request, response);

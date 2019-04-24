@@ -99,6 +99,51 @@ public class ItemDAO {
 			}
 		}
 	}
+
+	/**
+	 * 購入IDによる商品検索
+	 * @param buyId
+	 * @return ItemDataBeans
+	 * @throws SQLException
+	 */
+	public static ArrayList<ItemDataBeans> getItemBybuyId(int buyId) throws SQLException {
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			con = DBManager.getConnection();
+
+			st = con.prepareStatement(
+					"SELECT * FROM m_item JOIN `t_buy_detail` ON m_item.`id` = `t_buy_detail`.`item_id` "
+							+ "JOIN t_buy ON `t_buy_detail`.`buy_id` = `t_buy`.`id` "
+							+ "WHERE t_buy.id = ?");
+			st.setInt(1, buyId);
+
+			ResultSet rs = st.executeQuery();
+
+			ArrayList<ItemDataBeans> itemList = new ArrayList<ItemDataBeans>();
+
+			while (rs.next()) {
+				ItemDataBeans item = new ItemDataBeans();
+				item.setId(rs.getInt("id"));
+				item.setName(rs.getString("name"));
+				item.setDetail(rs.getString("detail"));
+				item.setPrice(rs.getInt("price"));
+				item.setFileName(rs.getString("file_name"));
+				itemList.add(item);
+			}
+			System.out.println("searching item by itemID has been completed");
+
+			return itemList;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
+
 	/**
 	 * int型による商品IDによる商品検索
 	 * @param itemId
@@ -139,6 +184,7 @@ public class ItemDAO {
 			}
 		}
 	}
+
 	/**
 	 * 商品検索
 	 * @param searchWord
@@ -411,7 +457,7 @@ public class ItemDAO {
 	 *@return
 	 *@throws
 	 */
-	public void itemUpdate(String itemName,String itemPrice,String detail,String datafile,String id) {
+	public void itemUpdate(String itemName, String itemPrice, String detail, String datafile, String id) {
 		Connection conn = null;
 		try {
 			//データベースへ接続
@@ -443,6 +489,7 @@ public class ItemDAO {
 			}
 		}
 	}
+
 	/**datafileがない場合の商品情報更新
 	 *@param itemName
 	 *@param itemPrice
