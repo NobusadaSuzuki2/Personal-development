@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.ItemDataBeans;
 import dao.ItemDAO;
@@ -34,6 +35,15 @@ public class AdminInfoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		try {
+			boolean login = (boolean) session.getAttribute("isLogin");
+
+			if (login != true) {
+				//login画面にリダイレクト
+				response.sendRedirect("LoginServlet");
+				return;
+			}
 
 		// 商品一覧情報を(DAOを使って)取得
 		ItemDAO itemDao = new ItemDAO();
@@ -44,7 +54,11 @@ public class AdminInfoServlet extends HttpServlet {
 		// 管理者画面のjspにフォワード
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminInfo.jsp");
 		dispatcher.forward(request, response);
-
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("LoginServlet");
+		}
 	}
 
 	/**

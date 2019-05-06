@@ -25,6 +25,14 @@ public class CartServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		try {
+			boolean login = (boolean) session.getAttribute("isLogin");
+
+			if (login != true) {
+				//login画面にリダイレクト
+				response.sendRedirect("LoginServlet");
+				return;
+			}
+
 			ArrayList<ItemDataBeans> cart = (ArrayList<ItemDataBeans>) session.getAttribute("cart");
 
 			//セッションにカートがない場合カートを作成
@@ -53,7 +61,7 @@ public class CartServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMessage", e.toString());
-			response.sendRedirect("Error");
+			response.sendRedirect("LoginServlet");
 		}
 	}
 
@@ -63,8 +71,14 @@ public class CartServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-
 		try {
+			boolean login = (boolean) session.getAttribute("isLogin");
+
+			if (login != true) {
+				//login画面にリダイレクト
+				response.sendRedirect("LoginServlet");
+				return;
+			}
 			//選択された商品のIDを型変換し利用
 			int id = Integer.parseInt(request.getParameter("item.id"));
 			//対象のアイテム情報を取得
@@ -95,10 +109,10 @@ public class CartServlet extends HttpServlet {
 			request.setAttribute("cartActionMessage", "商品を追加しました");
 
 			request.getRequestDispatcher(EcHelper.CART_PAGE).forward(request, response);
-		} catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMessage", e.toString());
-			response.sendRedirect("Error");
+			response.sendRedirect("LoginServlet");
 		}
 	}
 

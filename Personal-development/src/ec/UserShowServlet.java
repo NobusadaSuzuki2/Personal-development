@@ -33,16 +33,22 @@ public class UserShowServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// リクエストパラメータの文字コードを指定
 		request.setCharacterEncoding("UTF-8");
-		//セッション開始
 		HttpSession session = request.getSession();
+		try {
+			boolean login = (boolean) session.getAttribute("isLogin");
+
+			if (login != true) {
+				//login画面にリダイレクト
+				response.sendRedirect("LoginServlet");
+				return;
+			}
 
 		//更新失敗時に使用するため
 				String validationMessage = (String) EcHelper.cutSessionAttribute(session, "validationMessage");
 				//エラーメッセージセット
 				request.setAttribute("validationMessage", validationMessage);
-		try {
+
 			// ログイン時に取得したユーザーIDをセッションから取得
 			int userId = (int) session.getAttribute("userId");
 			//ユーザー情報を取得
@@ -51,9 +57,10 @@ public class UserShowServlet extends HttpServlet {
 			//ユーザー情報をセットしてフォワード
 			request.setAttribute("udb", udb);
 			request.getRequestDispatcher(EcHelper.USER_SHOW_PAGE).forward(request, response);
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
+		} catch (Exception e) {
 			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("LoginServlet");
 		}
 	}
 

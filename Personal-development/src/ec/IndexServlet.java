@@ -35,9 +35,9 @@ public class IndexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		// HttpSessionインスタンスの取得
 		HttpSession session = request.getSession();
 		try {
+
 			ArrayList<ItemDataBeans> itemList = ItemDAO.getRandItem(8);
 			// ユーザ情報をリクエストスコープにセットしてjspにフォワード
 			request.setAttribute("itemList", itemList);
@@ -45,8 +45,10 @@ public class IndexServlet extends HttpServlet {
 			// 商品一覧のjspにフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
 			dispatcher.forward(request, response);
-		} catch (SQLException e) {
+		}catch (Exception e) {
 			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("LoginServlet");
 		}
 	}
 

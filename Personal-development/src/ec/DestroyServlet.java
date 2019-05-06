@@ -1,7 +1,6 @@
 package ec;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -37,38 +36,39 @@ public class DestroyServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
-		// HttpSessionインスタンスの取得
 		HttpSession session = request.getSession();
+		try {
+			boolean login = (boolean) session.getAttribute("isLogin");
 
-		//ユーザーがログインしているか確認
-		Boolean isLogin = session.getAttribute("isLogin") != null ? (Boolean) session.getAttribute("isLogin") : false;
-		ArrayList<ItemDataBeans> cart = (ArrayList<ItemDataBeans>) session.getAttribute("cart");
+			if (login != true) {
+				//login画面にリダイレクト
+				response.sendRedirect("LoginServlet");
+				return;
+			}
+			//ユーザーがログインしているか確認
+			Boolean isLogin = session.getAttribute("isLogin") != null ? (Boolean) session.getAttribute("isLogin")
+					: false;
+			ArrayList<ItemDataBeans> cart = (ArrayList<ItemDataBeans>) session.getAttribute("cart");
 
-		//ログインしていない場合
-		if (!isLogin) {
-			// Sessionにリターンページ情報を書き込む
-			//session.setAttribute("returnStrUrl", "Buy");
-			// Login画面にリダイレクト
-			response.sendRedirect("LoginServlet");
-		} else {
 			// URLからGETパラメータとしてIDを受け取る
 			String id = request.getParameter("id");
-			try {
-				//idを引数にして、idに紐づくユーザ情報を出力する
-				ItemDataBeans itemid = ItemDAO.getItemByItemID(id);
 
-				// ユーザ情報をリクエストスコープにセットしてjspにフォワード
-				request.setAttribute("itemid", itemid);
+			//idを引数にして、idに紐づくユーザ情報を出力する
+			ItemDataBeans itemid = ItemDAO.getItemByItemID(id);
 
-				// フォワード
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/destroy.jsp");
-				dispatcher.forward(request, response);
-			} catch (SQLException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
+			// ユーザ情報をリクエストスコープにセットしてjspにフォワード
+			request.setAttribute("itemid", itemid);
+
+			// フォワード
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/destroy.jsp");
+			dispatcher.forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("LoginServlet");
 		}
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -83,7 +83,6 @@ public class DestroyServlet extends HttpServlet {
 
 		// hiddenがついたインプットのformからIDパラメータを受け取る
 		String id = request.getParameter("id");
-		String loginId = (String) session.getAttribute("userId");
 		try {
 			//idを引数にして、idに紐づくアイテム情報を出力する
 			ItemDAO itemDao = new ItemDAO();
@@ -94,14 +93,9 @@ public class DestroyServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/destroy.jsp");
 			dispatcher.forward(request, response);
 		}
-		if (loginId.equals("admin")) {
-			// 商品一覧のサーブレットにリダイレクト
-			response.sendRedirect("AdminInfoServlet");
+					response.sendRedirect("AdminInfoServlet");
 			return;
-		} else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/cart.jsp");
-			dispatcher.forward(request, response);
-		}
+
 	}
 
 }

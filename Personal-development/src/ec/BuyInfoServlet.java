@@ -1,7 +1,6 @@
 package ec;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -38,9 +37,17 @@ public class BuyInfoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// HttpSessionインスタンスの取得
+		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		try {
+			boolean login = (boolean) session.getAttribute("isLogin");
+
+			if (login != true) {
+				//login画面にリダイレクト
+				response.sendRedirect("LoginServlet");
+				return;
+			}
+
 			//セッションからユーザーIdを取得
 			int userId = (int) session.getAttribute("userId");
 			// URLからGETパラメータとしてIDを受け取る
@@ -61,9 +68,10 @@ public class BuyInfoServlet extends HttpServlet {
 
 			//フォワード
 			request.getRequestDispatcher(EcHelper.BUY_INFO_PAGE).forward(request, response);
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
+		}catch (Exception e) {
 			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("LoginServlet");
 		}
 
 	}

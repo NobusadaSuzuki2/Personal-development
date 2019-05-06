@@ -40,7 +40,9 @@
 				<h3>
 					<input type="text" name="itemPrice" placeholder="商品価格">
 				</h3>
-
+				<h3>
+					<input type="text" name="stock" placeholder="在庫数">
+				</h3>
 				<h3>
 					<textarea style="width: 1000px; height: 150px;" name="detail"
 						placeholder="商品詳細"></textarea>

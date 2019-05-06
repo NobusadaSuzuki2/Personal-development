@@ -31,7 +31,8 @@ public class UserDAO {
 		PreparedStatement st = null;
 		try {
 			con = DBManager.getConnection();
-			st = con.prepareStatement("INSERT INTO t_user(name,login_id,address,login_password,create_date) VALUES(?,?,?,?,?)");
+			st = con.prepareStatement(
+					"INSERT INTO t_user(name,login_id,address,login_password,create_date) VALUES(?,?,?,?,?)");
 			st.setString(1, udb.getName());
 			st.setString(2, udb.getLoginId());
 			st.setString(3, udb.getAddress());
@@ -91,6 +92,7 @@ public class UserDAO {
 			}
 		}
 	}
+
 
 	/**
 	 * ユーザーIDからユーザー情報を取得する

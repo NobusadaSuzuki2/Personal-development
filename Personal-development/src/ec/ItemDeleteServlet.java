@@ -24,7 +24,22 @@ public class ItemDeleteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		try {
+			boolean login = (boolean) session.getAttribute("isLogin");
 
+			if (login != true) {
+				//login画面にリダイレクト
+				response.sendRedirect("LoginServlet");
+				return;
+			}
+			response.sendRedirect("AdminInfoServlet");
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("LoginServlet");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

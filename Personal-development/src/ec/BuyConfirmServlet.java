@@ -32,6 +32,23 @@ public class BuyConfirmServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		try {
+			boolean login = (boolean) session.getAttribute("isLogin");
+
+			if (login != true) {
+				//login画面にリダイレクト
+				response.sendRedirect("LoginServlet");
+				return;
+			}
+			//Index画面にリダイレクト
+			response.sendRedirect("IndexServlet");
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("LoginServlet");
+		}
 
 	}
 
@@ -42,7 +59,7 @@ public class BuyConfirmServlet extends HttpServlet {
 		try {
 			// ログイン時に取得したユーザーIDをセッションから取得
 			int userId = (int) session.getAttribute("userId");
-			if(userId == 0) {
+			if (userId == 0) {
 				response.sendRedirect("LoginServlet");
 			}
 			// 更新確認画面から戻ってきた場合Sessionから取得。それ以外はuserIdでユーザーを取得

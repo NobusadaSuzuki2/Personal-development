@@ -35,15 +35,18 @@
 			<form action="ItemUpdateServlet" method="post">
 				<input type="hidden" name="id" value="${itemid.id}">
 
+				<p>商品名</p>
 				<h3>
 					<input type="text" size="60" name="itemName" value="${itemid.name}">
 				</h3>
+				<p>価格</p>
 				<h3>
-					<input type="text" size="10" name="itemPrice" value="${itemid.price}">
+					<input type="text" size="10" name="itemPrice"
+						value="${itemid.price}">
 				</h3>
-
+				<p>商品詳細</p>
 				<h3>
-					<textarea style="width: 1000px; height: 150px;" name="detail" >${itemid.detail}</textarea>
+					<textarea style="width: 1000px; height: 150px;" name="detail">${itemid.detail}</textarea>
 				</h3>
 
 				<p>

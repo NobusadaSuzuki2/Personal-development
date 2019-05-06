@@ -32,6 +32,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		try {
 
 		//ログイン失敗時に使用するため
 		String inputLoginId = session.getAttribute("loginId") != null
@@ -44,6 +45,11 @@ public class LoginServlet extends HttpServlet {
 
 		//ログインjspへフォワード
 		request.getRequestDispatcher(EcHelper.LOGIN_PAGE).forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("IndexServlet");
+		}
 	}
 
 	/**

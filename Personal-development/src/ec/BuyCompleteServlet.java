@@ -36,8 +36,23 @@ public class BuyCompleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//フォワード
-		request.getRequestDispatcher(EcHelper.BUY_COMPLETE_PAGE).forward(request, response);
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		try {
+			boolean login = (boolean) session.getAttribute("isLogin");
+
+			if (login != true) {
+				//login画面にリダイレクト
+				response.sendRedirect("LoginServlet");
+				return;
+			}
+			//フォワード
+			request.getRequestDispatcher(EcHelper.BUY_COMPLETE_PAGE).forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("LoginServlet");
+		}
 	}
 
 	/**

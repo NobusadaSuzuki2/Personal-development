@@ -251,15 +251,15 @@ public class ItemDAO {
 			if (!itemName.equals("")) {
 				sql += "  WHERE name LIKE '%" + itemName + "%'";
 				if (!createDate.equals("")) {
-					sql += " OR create_date >= '" + createDate + "'";
+					sql += " AND create_date >= '" + createDate + "'";
 				}
 				if (!createDate2.equals("")) {
-					sql += " OR create_date <= '" + createDate2 + "'";
+					sql += " AND create_date <= '" + createDate2 + "'";
 				}
 			} else if (!createDate.equals("")) {
 				sql += " WHERE create_date >= '" + createDate + "'";
 				if (!createDate2.equals("")) {
-					sql += " OR create_date <= '" + createDate2 + "'";
+					sql += " AND create_date <= '" + createDate2 + "'";
 				}
 			} else {
 				if (!createDate2.equals("")) {
@@ -339,20 +339,28 @@ public class ItemDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public static void setItemSignup(ItemDataBeans idb) throws SQLException {
+	public static int setItemSignup(ItemDataBeans idb) throws SQLException {
 		Connection con = null;
 		PreparedStatement st = null;
+		int autoIncKey = -1;
 
-		con = DBManager.getConnection();
 		try {
+			con = DBManager.getConnection();
 			st = con.prepareStatement(
-					"INSERT INTO m_item(name,detail,price,file_name,create_date,update_date) VALUES(?,?,?,?,now(),now())");
+					"INSERT INTO m_item(name,detail,price,file_name,create_date,update_date) VALUES(?,?,?,?,now(),now())",
+					Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, idb.getName());
 			st.setString(2, idb.getDetail());
 			st.setInt(3, idb.getPrice());
 			st.setString(4, idb.getFileName());
 			st.executeUpdate();
 
+			ResultSet rs = st.getGeneratedKeys();
+			if (rs.next()) {
+				autoIncKey = rs.getInt(1);
+			}
+
+			return autoIncKey;
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -361,6 +369,7 @@ public class ItemDAO {
 				con.close();
 			}
 		}
+		return 0;
 	}
 
 	/**

@@ -30,9 +30,16 @@ public class BuyServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//セッションを作成
+		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		try {
+			boolean login = (boolean) session.getAttribute("isLogin");
+
+			if (login != true) {
+				//login画面にリダイレクト
+				response.sendRedirect("LoginServlet");
+				return;
+			}
 			ArrayList<ItemDataBeans> cart = (ArrayList<ItemDataBeans>) session.getAttribute("cart");
 
 			//セッションにカートがない場合カートを作成
@@ -60,7 +67,7 @@ public class BuyServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.setAttribute("errorMessage", e.toString());
-			response.sendRedirect("Error");
+			response.sendRedirect("LoginServlet");
 		}
 
 	}

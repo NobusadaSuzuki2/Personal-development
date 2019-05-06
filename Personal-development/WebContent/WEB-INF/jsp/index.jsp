@@ -52,7 +52,7 @@
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">
 						<li class="page-item"><a class="page-link"
-							href="IndexServlet?search=${search}&page_num=${pageNum - 1}"
+							href="SearchServlet?search=${search}&page_num=${pageNum - 1}"
 							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 						</a></li>
 						<c:forEach begin="${(pageNum - 5) > 0 ? pageNum - 5 : 1}"
@@ -60,10 +60,10 @@
 							varStatus="status">
 							<li <c:if test="${pageNum == status.index }"></c:if>></li>
 							<li class="page-item"><a class="page-link"
-								href="IndexServlet?search=${search}&page_num=${status.index}">${status.index}</a></li>
+								href="SearchServlet?search=${search}&page_num=${status.index}">${status.index}</a></li>
 						</c:forEach>
 						<li class="page-item"><a class="page-link"
-							href="IndexServlet?search=${search}&page_num=${pageNum + 1}"
+							href="SearchServlet?search=${search}&page_num=${pageNum + 1}"
 							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 						</a></li>
 					</ul>

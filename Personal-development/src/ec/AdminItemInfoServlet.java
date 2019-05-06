@@ -1,7 +1,6 @@
 package ec;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,12 +33,19 @@ public class AdminItemInfoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// HttpSessionインスタンスの取得
+		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		// URLからGETパラメータとしてIDを受け取る
-		String id = request.getParameter("id");
-
 		try {
+			boolean login = (boolean) session.getAttribute("isLogin");
+
+			if (login != true) {
+				//login画面にリダイレクト
+				response.sendRedirect("LoginServlet");
+				return;
+			}
+			// URLからGETパラメータとしてIDを受け取る
+			String id = request.getParameter("id");
+
 			ItemDataBeans itemInfo = ItemDAO.getItemByItemID(id);
 
 			// ユーザ情報をリクエストスコープにセットしてjspにフォワード
@@ -47,9 +53,10 @@ public class AdminItemInfoServlet extends HttpServlet {
 			// 商品詳細のjspにフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminItemInfo.jsp");
 			dispatcher.forward(request, response);
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
+		} catch (Exception e) {
 			e.printStackTrace();
+			session.setAttribute("errorMessage", e.toString());
+			response.sendRedirect("LoginServlet");
 		}
 
 	}

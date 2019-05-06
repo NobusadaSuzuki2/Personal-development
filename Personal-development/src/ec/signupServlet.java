@@ -34,17 +34,14 @@ public class signupServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		request.setCharacterEncoding("UTF-8");
-		// HttpSessionインスタンスの取得
 		HttpSession session = request.getSession();
 
-		// リクエストスコープから"userInfo"インスタンスを取得
-		//User loginId = (User) session.getAttribute("userInfo");
 
 		// フォワード
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 		dispatcher.forward(request, response);
+
 
 	}
 
