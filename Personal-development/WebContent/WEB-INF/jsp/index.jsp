@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +45,9 @@
 						<div class="card-content">
 							<span class="card-title">${item.name}</span>
 							<div style="position: absolute; bottom: 0;">
-								<p>価格：￥${item.price}</p>
+								<fmt:formatNumber value="${item.price}" pattern=",000"
+									var="result" />
+								<p>価格：￥${fn:replace(result, ",", ",")}</p>
 							</div>
 						</div>
 					</div>

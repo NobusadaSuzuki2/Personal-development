@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +26,7 @@
 		<div class="container" style="width: 1200px">
 			<h3>商品詳細</h3>
 			<form action="CartServlet" method="post">
-			<input type="hidden" name="item.id" value="${itemInfo.id}">
+				<input type="hidden" name="item.id" value="${itemInfo.id}">
 				<button class="btn btn-success" type="submit" style="float: right;">カートに追加</button>
 				<br> <br> <br> <br>
 			</form>
@@ -38,7 +41,8 @@
 				</div>
 				<div class="col s6">
 					<h4>${itemInfo.name}</h4>
-					<h5>${itemInfo.price}円</h5>
+					<fmt:formatNumber value="${itemInfo.price}" pattern=",000" var="result" />
+					<h5>${fn:replace(result, ",", ",")}円</h5>
 					<p>${itemInfo.detail}</p>
 				</div>
 			</div>

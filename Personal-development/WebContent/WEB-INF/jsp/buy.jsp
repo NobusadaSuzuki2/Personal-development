@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,14 +40,18 @@
 								<th scope="row">${item.name}</th>
 								<td></td>
 								<td></td>
-								<td>${item.price}円</td>
+								<fmt:formatNumber value="${item.price}" pattern=",000"
+									var="result" />
+								<td>${fn:replace(result, ",", ",")}円</td>
 							</tr>
 						</c:forEach>
+						<fmt:formatNumber value="${bdb.totalPrice}" pattern=",000"
+							var="totalResult" />
 						<tr>
 							<th scope="row"></th>
 							<td></td>
 							<td align="right">合計金額</td>
-							<td class="buyG">${bdb.totalPrice}円</td>
+							<td class="buyG">${fn:replace(totalResult, ",", ",")}円</td>
 						</tr>
 						<tr>
 							<td></td>
