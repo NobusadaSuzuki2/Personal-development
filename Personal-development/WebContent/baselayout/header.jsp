@@ -40,7 +40,7 @@
 		%>
 
 		<div class="header-right">
-			<a href="Regist"><i class="material-icons">add</i></a>
+			<a href="signupServlet"><i class="material-icons">add</i></a>
 		</div>
 		<%
 			}
